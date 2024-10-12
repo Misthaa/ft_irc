@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/11 21:17:43 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:19:50 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ void Server::start(char **av)
     }
     setPort(av[1]);
     setPassword(av[2]);
+    
+}
+
+void Server::readData(std::string token, std::string content, int i)
+{
+    if(token == "NICK")
+    {
+        nickToken(content, i);
+    }
 }
 
 int Server::acceptClient()
@@ -83,7 +92,7 @@ int Server::acceptClient()
     static int nbfd;
     if (!nbfd)
         nbfd = 1;
-    int i = 0;
+    int i = 1;
     if (poll(_fds, MAX_CLIENT, 0) <= 0)
         return 1;
     if (_fds[0].revents & POLLIN)
@@ -94,15 +103,18 @@ int Server::acceptClient()
         _fds[nbfd].events = POLLIN;
         nbfd++;
     }
-    i = 1;
     while (i < MAX_CLIENT)
     {
         if (_fds[i].revents & POLLIN)
         {
-            int test = recv(_fds[i].fd, BUFF, 1024, 0);
-            BUFF[test] = '\0';
-            std::cout << i << std::endl;
-            std::cout << "CLIENT " << i << " : " << BUFF << std::endl;
+            std::string token = BUFF;
+            std::string content = BUFF;
+
+            int msg = recv(_fds[i].fd, BUFF, 1024, 0);
+            BUFF[msg] = '\0';
+            token = token.substr(0, token.find(" "));
+            content = content.substr(content.find(" ") + 1);
+            readData(token, content, i);
         }
         i++;
     }

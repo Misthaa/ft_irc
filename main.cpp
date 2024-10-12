@@ -6,11 +6,11 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 17:55:46 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/11 20:57:31 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:07:42 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.hpp"
+#include "Server/server.hpp"
 
 int main(int ac, char **av)
 {
