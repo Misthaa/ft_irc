@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nickToken.cpp                                      :+:      :+:    :+:   */
+/*   userToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 16:07:25 by roguigna         ###   ########.fr       */
+/*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
+/*   Updated: 2024/10/13 15:19:20 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.hpp"
 
-void Server::nickToken(std::string content, int i)
+void Server::userToken(std::string content, int i)
 {
+    std::string msg;
     int countWord = 0;
 
     countWord = std::count(content.begin(), content.end(), ' ') + 1;
     if (countWord != 1)
     {
-        servSend(_fds[i].fd, ":localhost 461 * NICK :Not enough parameters");
+        servSend(_fds[i].fd, ":localhost speError * NICK :Not enough parameters");
         return;
     }
     if (_fds[i].fd == -1)
     {
-        servSend(_fds[i].fd, ":localhost 451 * NICK :You have not registered");
+        servSend(_fds[i].fd, ":localhost speError * NICK :You have not registered");
         return;
     }
     if (content.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]-{}\\^") != 0)
     {
-        servSend(_fds[i].fd, ":localhost 432 * NICK :Erroneous nickname");
+        servSend(_fds[i].fd, ":localhost speError * NICK :Erroneous username");
         return;
     }
-    _client[i].setNickname(content);
-    std::string msg = "name : " + _client[i].getNickname();
-    std::cout << msg << std::endl;
-    servSend(_fds[i].fd, msg);
+    
+    // _fds[i].setNickname(content);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/12 22:19:50 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:45:18 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,29 @@ void Server::readData(std::string token, std::string content, int i)
     {
         nickToken(content, i);
     }
+    // if (token == "USER")
+    // {
+    //     userToken(content, i);
+    // }
+}
+
+void Server::servSend(int fd, std::string msg) {
+    send(fd, msg.c_str(), msg.size(), 0);
+}
+
+void Server::newClient()
+{
+    std::cout << "New client is here!" << std::endl;
+    int client = accept(_serverSocket, NULL, NULL);
+    for (int i = 1; i < MAX_CLIENT; i++)
+    {
+        if (_fds[i].fd == -1)
+        {
+            _fds[i].fd = client;
+            _fds[i].events = POLLIN;
+            _client[i].setClientSocket(client);
+        }
+    }
 }
 
 int Server::acceptClient()
@@ -97,11 +120,12 @@ int Server::acceptClient()
         return 1;
     if (_fds[0].revents & POLLIN)
     {
-        std::cout << "New client is here!" << std::endl;
-        int client = accept(_serverSocket, NULL, NULL);
-        _fds[nbfd].fd = client;
-        _fds[nbfd].events = POLLIN;
-        nbfd++;
+        // std::cout << "New client is here!" << std::endl;
+        // int client = accept(_serverSocket, NULL, NULL);
+        // _fds[nbfd].fd = client;
+        // _fds[nbfd].events = POLLIN;
+        // nbfd++;
+        newClient();
     }
     while (i < MAX_CLIENT)
     {
