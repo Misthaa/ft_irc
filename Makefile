@@ -6,7 +6,7 @@
 #    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/12 22:03:57 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/13 16:21:45 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS        =	main.cpp\
 				Client/client.cpp\
 				Server/server.cpp\
 				Server/nickToken.cpp\
+				Server/userToken.cpp\
 				
 NAME        =    ircserv
 

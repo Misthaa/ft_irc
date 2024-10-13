@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   userToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/13 15:19:20 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:27:49 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void Server::userToken(std::string content, int i)
         servSend(_fds[i].fd, ":localhost speError * NICK :Erroneous username");
         return;
     }
-    
-    // _fds[i].setNickname(content);
+    _client[i].setUser(content);
+    // std::string msg2 = "User : " + _client[i].getUser();
+    // std::cout << msg2 << std::endl;
+    // servSend(_fds[i].fd, msg2);
 }

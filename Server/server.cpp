@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 15:45:18 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:19:24 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,17 @@ void Server::start(char **av)
     serverAddr.sin_port = htons(std::atoi(av[1]));
     serverAddr.sin_addr.s_addr = INADDR_ANY;
 
-    bind(_serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
-    listen(_serverSocket, MAX_CLIENT);
+    if (bind(_serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0)
+    {
+        close(_serverSocket);
+        throw std::runtime_error("Bind failed");
+    }
+    if (listen(_serverSocket, MAX_CLIENT) < 0)\
+    {
+        close(_serverSocket);
+        throw std::runtime_error("Listen failed");
+    }
+    fcntl(_serverSocket, F_SETFL, O_NONBLOCK);
     for (int i = 0; i < MAX_CLIENT; i++)
     {
         _fds[i].fd = -1;
@@ -71,7 +80,6 @@ void Server::start(char **av)
     }
     setPort(av[1]);
     setPassword(av[2]);
-    
 }
 
 void Server::readData(std::string token, std::string content, int i)
@@ -80,14 +88,15 @@ void Server::readData(std::string token, std::string content, int i)
     {
         nickToken(content, i);
     }
-    // if (token == "USER")
-    // {
-    //     userToken(content, i);
-    // }
+    if (token == "USER")
+    {
+        userToken(content, i);
+    }
 }
 
 void Server::servSend(int fd, std::string msg) {
-    send(fd, msg.c_str(), msg.size(), 0);
+    msg += "\r\n";
+    send(fd, msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 }
 
 void Server::newClient()
@@ -101,6 +110,7 @@ void Server::newClient()
             _fds[i].fd = client;
             _fds[i].events = POLLIN;
             _client[i].setClientSocket(client);
+            return;
         }
     }
 }
@@ -119,23 +129,17 @@ int Server::acceptClient()
     if (poll(_fds, MAX_CLIENT, 0) <= 0)
         return 1;
     if (_fds[0].revents & POLLIN)
-    {
-        // std::cout << "New client is here!" << std::endl;
-        // int client = accept(_serverSocket, NULL, NULL);
-        // _fds[nbfd].fd = client;
-        // _fds[nbfd].events = POLLIN;
-        // nbfd++;
         newClient();
-    }
     while (i < MAX_CLIENT)
     {
         if (_fds[i].revents & POLLIN)
         {
-            std::string token = BUFF;
-            std::string content = BUFF;
 
             int msg = recv(_fds[i].fd, BUFF, 1024, 0);
             BUFF[msg] = '\0';
+            std::string token = BUFF;
+            std::string content = BUFF;
+            std::cout << "CLIENT " << i << " : " << BUFF << std::endl;
             token = token.substr(0, token.find(" "));
             content = content.substr(content.find(" ") + 1);
             readData(token, content, i);

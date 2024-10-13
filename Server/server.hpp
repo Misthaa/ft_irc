@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 15:34:47 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:44:21 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <poll.h>
 # include <cstring>
 # include <algorithm>
+# include <stdexcept>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/types.h>
 
 #include "../Client/client.hpp"
 
