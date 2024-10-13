@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:27:10 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:08:18 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,18 @@ int Server::acceptClient()
     {
         if (_fds[i].revents & POLLIN)
         {
-
             int msg = recv(_fds[i].fd, BUFF[i], 1024, 0);
+            if (msg <= 0)
+            {
+                int clientSocket = _client[i].getClientSocket();
+                close(clientSocket);
+                _client[i].setNickname("");
+                _client[i].setUser("");
+                _fds[i].revents = 0;
+                _fds[i].fd = -1;
+                _client[i].setClientSocket(-1);
+                return (1);
+            }
             BUFF[i][msg] = '\0';
             std::string token = BUFF[i];
             std::string content = BUFF[i];
