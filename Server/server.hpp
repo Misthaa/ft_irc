@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 17:44:21 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:26:34 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class Server
         int _serverSocket;
         pollfd _fds[MAX_CLIENT + 1];
         Client _client[MAX_CLIENT];
+        char   BUFF[MAX_CLIENT][1024];
         std::string _password;
         int _port;
         void readData(std::string token, std::string content, int i);

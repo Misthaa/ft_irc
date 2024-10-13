@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:19:24 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:27:10 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,10 @@ void Server::newClient()
 
 int Server::acceptClient()
 {
-    char BUFF[1024];
     _fds[0].revents = 0;
     _fds[0].events = POLLIN;
     _fds[0].fd = _serverSocket;
-    
-    static int nbfd;
-    if (!nbfd)
-        nbfd = 1;
+
     int i = 1;
     if (poll(_fds, MAX_CLIENT, 0) <= 0)
         return 1;
@@ -135,11 +131,11 @@ int Server::acceptClient()
         if (_fds[i].revents & POLLIN)
         {
 
-            int msg = recv(_fds[i].fd, BUFF, 1024, 0);
-            BUFF[msg] = '\0';
-            std::string token = BUFF;
-            std::string content = BUFF;
-            std::cout << "CLIENT " << i << " : " << BUFF << std::endl;
+            int msg = recv(_fds[i].fd, BUFF[i], 1024, 0);
+            BUFF[i][msg] = '\0';
+            std::string token = BUFF[i];
+            std::string content = BUFF[i];
+            std::cout << "CLIENT " << i << " : " << BUFF[i] << std::endl;
             token = token.substr(0, token.find(" "));
             content = content.substr(content.find(" ") + 1);
             readData(token, content, i);
