@@ -6,11 +6,11 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 17:55:46 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:42:35 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:56:39 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server/server.hpp"
+#include "server.hpp"
 
 void closeServer(Server *server)
 {

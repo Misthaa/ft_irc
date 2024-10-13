@@ -6,42 +6,64 @@
 #    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/13 16:21:45 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/13 18:57:38 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Sources
 SRCS        =	main.cpp\
-				Client/client.cpp\
-				Server/server.cpp\
-				Server/nickToken.cpp\
-				Server/userToken.cpp\
-				
+				src/Client/client.cpp\
+				src/Server/server.cpp\
+				src/Server/nickToken.cpp\
+				src/Server/userToken.cpp
+
+# Nom de l'exécutable
 NAME        =    ircserv
 
-OBJS        =    ${SRCS:.cpp=.o}
+# Répertoire pour les fichiers objets
+OBJ_DIR     =    obj
 
-CXX        =    g++
+# Objets (les .o seront créés dans le répertoire obj/)
+OBJS        =    $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 
-CXXFLAGS      =    -std=c++98 -Wall -Werror -Wextra
+# Compilateur et options
+CXX         =    c++
+CXXFLAGS    =    -std=c++98 -Wall -Werror -Wextra -Iincludes
 
-GREEN=\033[0;32m
-YELLOW=\033[0;33m
-NC=\033[0m
+# Couleurs
+GREEN       =    \033[0;32m
+YELLOW      =    \033[0;33m
+NC          =    \033[0m
 
-all : ${NAME}
+# Règle par défaut
+all : $(NAME)
 
-${NAME} : ${OBJS}
-	@${CXX} ${CXXFLAGS} -o ${NAME} ${OBJS}
+# Création de l'exécutable
+$(NAME) : $(OBJS)
+	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 	@echo "$(GREEN)Compilation de IRC...$(NC)"
 
+# Compilation des fichiers .cpp en .o dans obj/
+$(OBJ_DIR)/%.o : %.cpp | $(OBJ_DIR)
+	@mkdir -p $(@D)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Création du répertoire obj si nécessaire
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+# Nettoyage des fichiers objets
 clean :
-	@rm -f ${OBJS}
+	@rm -rf $(OBJ_DIR)
 	@echo "$(YELLOW)Nettoyage en cours...$(NC)"
 	@echo "$(YELLOW)Nettoyage terminé.$(NC)"
 
+# Nettoyage complet (objets et exécutable)
 fclean : clean
-	@rm -f ${NAME}
+	@rm -f $(NAME)
 
+# Recompiler tout
 re    : fclean all
 
 .PHONY : re fclean all clean
+
