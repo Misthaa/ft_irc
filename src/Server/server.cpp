@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 19:08:18 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:39:58 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ void Server::setPort(char *port)
     else if (std::atoi(port) > 65535)
         throw std::invalid_argument("Port is too high, must be between 1024 and 65535");
     else
+    {
         _port = std::atoi(port);
+        _sPort = port;
+    }
+    
 }
 
 void Server::setPassword(std::string password)
@@ -77,6 +81,9 @@ void Server::start(char **av)
         _fds[i].fd = -1;
         _fds[i].events = 0;
         _fds[i].revents = 0;
+        _client[i].setNickname("");
+        _client[i].setUser("");
+        _client[i].setClientSocket(-1);
     }
     setPort(av[1]);
     setPassword(av[2]);
@@ -92,6 +99,13 @@ void Server::readData(std::string token, std::string content, int i)
     {
         userToken(content, i);
     }
+}
+
+void Server::sendError(Client client, std::string errorCode,std::string errorMsg) {
+    std::string msg;
+
+    msg = ":localhost:" + _sPort + " " + errorCode + " " + client.getNickname() + " " + errorMsg;
+    servSend(client.getClientSocket(), msg);
 }
 
 void Server::servSend(int fd, std::string msg) {
@@ -142,10 +156,13 @@ int Server::acceptClient()
                 _client[i].setClientSocket(-1);
                 return (1);
             }
-            BUFF[i][msg] = '\0';
+            BUFF[i][msg - 1] = '\0';
             std::string token = BUFF[i];
             std::string content = BUFF[i];
-            std::cout << "CLIENT " << i << " : " << BUFF[i] << std::endl;
+            if (_client[i].getNickname() == "")
+                std::cout << "CLIENT " << i << " : " << BUFF[i] << std::endl;
+            else
+                std::cout << _client[i].getNickname() << " : " << BUFF[i] << std::endl;
             token = token.substr(0, token.find(" "));
             content = content.substr(content.find(" ") + 1);
             readData(token, content, i);

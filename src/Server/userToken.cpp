@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   userToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/13 16:27:49 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:37:32 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,38 @@
 
 void Server::userToken(std::string content, int i)
 {
-    std::string msg;
     int countWord = 0;
 
-    countWord = std::count(content.begin(), content.end(), ' ') + 1;
-    if (countWord != 1)
+    if (_client[i].getNickname() == "")
     {
-        servSend(_fds[i].fd, ":localhost speError * NICK :Not enough parameters");
+        sendError(_client[i], "", "* USER :Nickname need to be specify to define user");
+        return;
+    }
+    countWord = std::count(content.begin(), content.end(), ' ') + 1;
+    if (countWord < 1)
+    {
+        sendError(_client[i], "461", "* USER :Not enough parameters");
         return;
     }
     if (_fds[i].fd == -1)
     {
-        servSend(_fds[i].fd, ":localhost speError * NICK :You have not registered");
+        sendError(_client[i], "461", "* USER :You have not registered");
         return;
     }
     if (content.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]-{}\\^") != 0)
     {
-        servSend(_fds[i].fd, ":localhost speError * NICK :Erroneous username");
+        sendError(_client[i], "432", "* USER :Erroneous username");
         return;
     }
+    for (int j = 1; j < MAX_CLIENT; j++)
+    {
+        if (_client[j].getUser() == content)
+        {
+            sendError(_client[i], "462", "Unauthorized command (already registered)");
+            return ;
+        }
+    }
     _client[i].setUser(content);
-    // std::string msg2 = "User : " + _client[i].getUser();
-    // std::cout << msg2 << std::endl;
-    // servSend(_fds[i].fd, msg2);
+    std::string msg = "name : " + _client[i].getUser();
+    servSend(_fds[i].fd, msg);
 }

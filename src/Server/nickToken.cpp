@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:21:40 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:38:14 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,28 @@ void Server::nickToken(std::string content, int i)
     int countWord = 0;
 
     countWord = std::count(content.begin(), content.end(), ' ') + 1;
-    if (countWord != 1)
+    if (countWord < 1)
     {
-        servSend(_fds[i].fd, ":localhost 461 * NICK :Not enough parameters");
+        sendError(_client[i], "461", "* NICK :Not enough parameters");
         return;
     }
     if (_fds[i].fd == -1)
     {
-        servSend(_fds[i].fd, ":localhost 451 * NICK :You have not registered");
+        sendError(_client[i], "451", "* NICK :You have not registered");
         return;
     }
     if (content.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]-{}\\^") != 0)
     {
-        servSend(_fds[i].fd, ":localhost 432 * NICK :Erroneous nickname");
+        sendError(_client[i], "432", "* NICK :Erroneous username");
         return;
+    }
+    for (int j = 1; j < MAX_CLIENT; j++)
+    {
+        if (_client[j].getNickname() == content)
+        {
+            sendError(_client[i], "462", "* NICK :Unauthorized command (already registered)");
+            return ;
+        }
     }
     _client[i].setNickname(content);
     std::string msg = "name : " + _client[i].getNickname();

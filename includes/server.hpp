@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:56:18 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:00:29 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # include <cstring>
 # include <algorithm>
 # include <stdexcept>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/types.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <sys/types.h>
 
 #include "client.hpp"
 
@@ -48,6 +48,7 @@ class Server
         Client _client[MAX_CLIENT];
         char   BUFF[MAX_CLIENT][1024];
         std::string _password;
+        std::string  _sPort;
         int _port;
         void readData(std::string token, std::string content, int i);
         void newClient();
@@ -55,6 +56,8 @@ class Server
         void userToken(std::string content, int i);
         
         void servSend(int fd, std::string msg);
+        void sendError(Client client, std::string errorCode, std::string errorMsg);
+
 };
 
 #endif

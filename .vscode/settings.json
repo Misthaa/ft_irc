@@ -5,6 +5,7 @@
         "stdexcept": "cpp",
         "string": "cpp",
         "*.tcc": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "algorithm": "cpp"
     }
 }
