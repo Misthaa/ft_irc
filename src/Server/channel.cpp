@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 16:48:36 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:31:57 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ void Channel::removeClient(Client &client)
 void Channel::sendChannelMsg(std::string msg)
 {
 	std::map<Client, bool>::iterator it = _channelClient.begin();
-	// std::string msg;
-	(void)msg;
+	std::string sendMsg;
 	while (it != _channelClient.end())
 	{
-		// msg = _channelName + " " + it->first.getNickname() + " : " + msg;
-		send(it->first.getClientSocket(), msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
+		sendMsg = _channelName + " " + it->first.getNickname() + " : " + msg;
+		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
 	}
 }
