@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 15:44:30 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:55:22 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void Server::userToken(std::string content, int i)
     }
     for (int j = 1; j < MAX_CLIENT; j++)
     {
-        // if (server == content) //find if server defined
-        // {
-        //     sendError(_client[i], "462", "Unauthorized command (already registered)");
-        //     return ;
-        // }
+        if (_client[i].getUser() == content)
+        {
+            sendError(_client[i], "462", "Unauthorized command (already registered)");
+            return ;
+        }
     }
     _client[i].setUser(content);
     std::string msg = "name : " + _client[i].getUser();

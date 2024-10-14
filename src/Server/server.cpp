@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/14 15:47:35 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:25:18 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,17 @@ void Server::readData(std::string token, std::string content, int i)
     }
 }
 
-void Server::sendError(Client client, std::string errorCode,std::string errorMsg) {
+void Server::sendError(Client& client, std::string errorCode,std::string errorMsg) {
     std::string msg;
 
     msg = ":localhost:" + _sPort + " " + errorCode + " " + client.getNickname() + " " + errorMsg;
+    std::cout << msg << std::endl;
     servSend(client.getClientSocket(), msg);
 }
 
 void Server::servSend(int fd, std::string msg) {
     msg += "\r\n";
+    std::cout << fd << std::endl;
     send(fd, msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 }
 
