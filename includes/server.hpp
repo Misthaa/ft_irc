@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 20:00:29 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:23:29 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@
 # include <sys/types.h>
 
 #include "client.hpp"
+#include "channel.hpp"
 
-# define MAX_CLIENT 100
+# define MAX_CLIENT  100
+# define MAX_CHANNEL 100
+
 
 class Server
 {
@@ -46,6 +49,8 @@ class Server
         int _serverSocket;
         pollfd _fds[MAX_CLIENT + 1];
         Client _client[MAX_CLIENT];
+        Channel _channel[MAX_CHANNEL];
+        
         char   BUFF[MAX_CLIENT][1024];
         std::string _password;
         std::string  _sPort;

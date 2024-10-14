@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 15:50:54 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:38:03 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,18 @@ class Client
         Client();
         ~Client();
         void start(char **av);
-        std::string getNickname() { return _nickname; }
-        std::string getUser() { return _user; }
-        int  getClientSocket() {return _clientSocket; }
+        std::string &getNickname() { return _nickname; }
+        std::string &getUser() { return _user; }
+        int  getClientSocket() const {return _clientSocket; }
         void setNickname(std::string nickname) { _nickname = nickname; }
         void setUser(std::string user) { _user = user; }
         void setClientSocket(int client) { _clientSocket = client; }
+
+        bool operator==(const Client &c) const { return _clientSocket == c.getClientSocket(); }
+        bool operator!=(const Client &c) const { return _clientSocket != c.getClientSocket(); }
+        bool operator<(const Client &c) const { return _clientSocket <= c.getClientSocket(); }
+        bool operator>(const Client &c) const { return _clientSocket >= c.getClientSocket(); }
+        
     private:
         int _clientSocket;
         std::string _nickname;
