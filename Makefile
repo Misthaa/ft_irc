@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
+#    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/14 15:29:18 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/14 16:52:49 by roguigna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ OBJS        =    $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 
 # Compilateur et options
 CXX         =    c++
-CXXFLAGS    =    -std=c++98 -Wall -Werror -Wextra -Iincludes
+CXXFLAGS    =    -std=c++98 -Wall  -Wextra -Iincludes -Werror
 
 # Couleurs
 GREEN       =    \033[0;32m

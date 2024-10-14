@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/14 15:47:24 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:23:49 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ class Server
         void prvMessageToken(std::string content, int i);
         void prvMessage(std::string content, int i);
         void channelMessage(std::string content, int i);
+        void joinToken(std::string content, int i);
         
         void servSend(int fd, std::string msg);
-        void sendError(Client client, std::string errorCode, std::string errorMsg);
+        void sendError(Client& client, std::string errorCode, std::string errorMsg);
 
 };
 

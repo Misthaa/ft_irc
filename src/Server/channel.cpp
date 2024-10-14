@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 15:20:48 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:48:36 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 	_channelClient[client] = true;
 }
 
-void Channel::addClient(Client client)
+void Channel::addClient(Client &client)
 {
 	std::map<Client, bool>::iterator it = _channelClient.find(client);
 	if (it != _channelClient.end())
@@ -34,7 +34,7 @@ void Channel::addClient(Client client)
 	_channelClient[client] = false;
 }
 
-void Channel::removeClient(Client client)
+void Channel::removeClient(Client &client)
 {
 	std::map<Client, bool>::iterator it = _channelClient.find(client);
 	if (it == _channelClient.end())
@@ -45,8 +45,11 @@ void Channel::removeClient(Client client)
 void Channel::sendChannelMsg(std::string msg)
 {
 	std::map<Client, bool>::iterator it = _channelClient.begin();
+	// std::string msg;
+	(void)msg;
 	while (it != _channelClient.end())
 	{
+		// msg = _channelName + " " + it->first.getNickname() + " : " + msg;
 		send(it->first.getClientSocket(), msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
 	}
