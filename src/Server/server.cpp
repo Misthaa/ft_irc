@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:02:32 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:41:49 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int Server::acceptClient()
     _fds[0].fd = _serverSocket;
 
     int i = 1;
-    if (poll(_fds, MAX_CLIENT, 0) <= 0)
+    if (poll(_fds, MAX_CLIENT, 100) <= 0)
         return 1;
     if (_fds[0].revents & POLLIN)
         newClient();
