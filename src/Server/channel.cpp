@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:36:23 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:42:47 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 {
 	_channelName = channelName;
 	_channelPassword = channelPassword;
-	_channelClient[client] = true;
+	// _channelClient[client] = true;
+	_channelClient.insert(std::pair<Client&, bool>(client, true));
 	std::cout << "Channel " << _channelName << " created" << std::endl;
 }
 

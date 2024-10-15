@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:28:25 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:42:41 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ class Client
 
         bool operator==(const Client &c) const { return _clientSocket == c.getClientSocket(); }
         bool operator!=(const Client &c) const { return _clientSocket != c.getClientSocket(); }
-        bool operator<(const Client &c) const { return _clientSocket <= c.getClientSocket(); }
-        bool operator>(const Client &c) const { return _clientSocket >= c.getClientSocket(); }
+        bool operator<(const Client &c) const { return _clientSocket < c.getClientSocket(); }
+        bool operator>(const Client &c) const { return _clientSocket > c.getClientSocket(); }
         
     private:
         int _clientSocket;

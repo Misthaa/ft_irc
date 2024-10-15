@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:41:49 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:43:15 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,31 +89,51 @@ void Server::start(char **av)
     setPassword(av[2]);
 }
 
-void Server::readData(std::string token, std::string content, int i)
+void Server::readData(char *BUFF, int i)
 {
-    if(token == "NICK")
+    std::string buff = BUFF;
+    std::string line;
+    std::string token;
+    std::string content;
+    
+    while (BUFF[0])
     {
-        nickToken(content, i);
-    }
-    if (token == "USER")
-    {
-        userToken(content, i);
-    }
-    if (token == "PRIVMSG")
-    {
-        prvMessageToken(content, i);
-    }
-    if (token == "JOIN")
-    {
-        joinToken(content, i);
-    }
-    if (token == "INVITE")
-    {
-        inviteToken(content, i);
-    }
-    if (token == "TOPIC")
-    {
-        topicToken(content, i);
+        if (buff.find("\n") == std::string::npos)
+            line = buff.substr(0, buff.length());
+        else    
+            line = buff.substr(0, buff.find("\n"));
+        if (line.find('\r') != std::string::npos)
+			line = line.substr(0, line.find('\r')) + line.substr(line.find('\r') + 1);
+        token = line.substr(0, token.find(" "));
+        content = line.substr(content.find(" ") + 1);
+        if (token == "NICK")
+        {
+            nickToken(content, i);
+        }
+        if (token == "USER")
+        {
+            userToken(content, i);
+        }
+        if (token == "PRIVMSG")
+        {
+            prvMessageToken(content, i);
+        }
+        if (token == "JOIN")
+        {
+            joinToken(content, i);
+        }
+        if (token == "INVITE")
+        {
+            inviteToken(content, i);
+        }
+        if (token == "TOPIC")
+        {
+            topicToken(content, i);
+        }
+        buff = buff.substr(buff.find('\n') + 1);
+		if (buff.find('\n') == std::string::npos)
+			break ;
+        return;
     }
 }
 
@@ -183,7 +203,8 @@ int Server::acceptClient()
                 std::cout << _client[i].getNickname() << " : " << BUFF[i] << std::endl;
             token = token.substr(0, token.find(" "));
             content = content.substr(content.find(" ") + 1);
-            readData(token, content, i);
+            // readData(token, content, i);
+            readData(BUFF[i], i);
         }
         i++;
     }

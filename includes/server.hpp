@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:01:22 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:42:43 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ class Server
         std::string _password;
         std::string  _sPort;
         int _port;
-        void readData(std::string token, std::string content, int i);
+        // void readData(std::string token, std::string content, int i);
+        void readData(char *BUFF, int i);
         void newClient();
         
         void nickToken(std::string content, int i);
