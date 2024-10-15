@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/14 17:25:18 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:18:38 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ void Server::readData(std::string token, std::string content, int i)
     if (token == "PRIVMSG")
     {
         prvMessageToken(content, i);
+    }
+    if (token == "JOIN")
+    {
+        joinToken(content, i);
     }
 }
 

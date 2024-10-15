@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 16:39:07 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:38:12 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Channel
 		Channel();
 		~Channel();
 
-		void start(std::string channelName, std::string channelPassword, Client channelClient);
+		void start(std::string channelName, std::string channelPassword, Client &channelClient);
 		void addClient(Client &client);
 		void removeClient(Client &client);
 		void sendChannelMsg(std::string msg);
@@ -34,6 +34,7 @@ class Channel
 
 		std::string getChannelName() { return _channelName; }
 		std::string getChannelPassword() { return _channelPassword; }
+		std::map<Client &, bool> &getChannelClient() { return _channelClient; }
 		void setChannelName(std::string channelName) { _channelName = channelName; }
 		void setChannelPassword(std::string channelPassword) { _channelPassword = channelPassword; }
 		
@@ -42,7 +43,7 @@ class Channel
 		std::string _channelPassword;
 		std::string _channelTopic;
 		std::string _channelInviteList[100];
-		std::map<Client, bool> _channelClient;
+		std::map<Client &, bool> _channelClient;
 };
 
 #endif
