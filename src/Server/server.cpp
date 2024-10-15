@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 15:44:16 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:02:32 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,10 @@ void Server::readData(std::string token, std::string content, int i)
     if (token == "INVITE")
     {
         inviteToken(content, i);
+    }
+    if (token == "TOPIC")
+    {
+        topicToken(content, i);
     }
 }
 

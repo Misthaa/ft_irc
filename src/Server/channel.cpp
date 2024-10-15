@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 16:28:56 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:36:23 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ void Channel::removeClient(Client &client)
 
 int Channel::isOperator(Client &client)
 {
-	std::map<Client&, bool>::iterator it = _channelClient.find(client);
+	std::map<Client&, bool>::iterator it = _channelClient.begin();
+	while (it != _channelClient.end())
+	{
+		if (it->first == client)
+			break;
+		it++;
+	}
 	if (it == _channelClient.end())
 		return 0;
 	if (it->second == true)

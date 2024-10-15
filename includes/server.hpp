@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 15:27:03 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:01:22 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class Server
         void channelMessage(std::string content, int i);
         void joinToken(std::string content, int i);
         void inviteToken(std::string content, int i);
+        void topicToken(std::string content, int i);
 
         void servSend(int fd, std::string msg);
         void sendError(Client& client, std::string errorCode, std::string errorMsg);

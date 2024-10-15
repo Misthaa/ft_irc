@@ -6,7 +6,7 @@
 #    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/15 15:41:40 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/15 17:01:00 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS        =	main.cpp\
 				src/Server/joinToken.cpp\
 				src/Server/prvMsgToken.cpp\
 				src/Server/inviteToken.cpp\
+				src/Server/topicToken.cpp\
 
 # Nom de l'exécutable
 NAME        =    ircserv
