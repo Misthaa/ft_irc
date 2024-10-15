@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 13:18:38 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:44:16 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ void Server::readData(std::string token, std::string content, int i)
     if (token == "JOIN")
     {
         joinToken(content, i);
+    }
+    if (token == "INVITE")
+    {
+        inviteToken(content, i);
     }
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
+#    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/15 13:20:28 by roguigna         ###   ########.fr        #
+#    Updated: 2024/10/15 15:41:40 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS        =	main.cpp\
 				src/Server/channel.cpp\
 				src/Server/joinToken.cpp\
 				src/Server/prvMsgToken.cpp\
+				src/Server/inviteToken.cpp\
 
 # Nom de l'exécutable
 NAME        =    ircserv
