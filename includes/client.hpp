@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:28:25 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:50:23 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class Client
         void setNickname(std::string nickname) { _nickname = nickname; }
         void setUser(std::string user) { _user = user; }
         void setClientSocket(int client) { _clientSocket = client; }
-
+    
         bool operator==(const Client &c) const { return _clientSocket == c.getClientSocket(); }
         bool operator!=(const Client &c) const { return _clientSocket != c.getClientSocket(); }
         bool operator<(const Client &c) const { return _clientSocket <= c.getClientSocket(); }

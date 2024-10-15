@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:36:23 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:56:33 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,16 @@ void Channel::addClient(Client &client)
 
 void Channel::removeClient(Client &client)
 {
-	std::map<Client&, bool>::iterator it = _channelClient.find(client);
-	if (it == _channelClient.end())
-		return ;
-	_channelClient.erase(it);
+	std::map<Client&, bool>::iterator it = _channelClient.begin();
+	while (it != _channelClient.end())
+	{
+		if (it->first.getNickname() == client.getNickname())
+		{
+			_channelClient.erase(it);
+			return ;
+		}
+		it++;
+	}
 }
 
 int Channel::isOperator(Client &client)
@@ -68,6 +74,16 @@ void Channel::addInviteList(std::string *channelInviteList)
 			_channelInviteList[i] = channelInviteList[i];
 		break;
 	}
+}
+
+bool Channel::isClientInChannel(Client &client)
+{
+    for (std::map<Client&, bool>::iterator it = _channelClient.begin(); it != _channelClient.end(); it++)
+    {
+        if (it->first.getNickname() == client.getNickname())
+            return true;
+    }
+    return false;
 }
 
 void Channel::sendChannelMsg(std::string msg)

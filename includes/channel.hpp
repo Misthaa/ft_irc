@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 16:15:24 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:51:17 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Channel
 		void sendChannelMsg(std::string msg);
 		void setChannelTopic(std::string channelTopic) { _channelTopic = channelTopic; };
 		std::string getChannelTopic() { return _channelTopic; };
+		bool isClientInChannel(Client &client);
 
 
 		std::string getChannelName() { return _channelName; }
