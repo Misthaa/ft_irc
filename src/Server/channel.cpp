@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 18:56:33 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:08:49 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 {
 	_channelName = channelName;
 	_channelPassword = channelPassword;
-	_channelClient[client] = true;
+	// _channelClient[client] = true;
+	_channelClient.insert(std::pair<Client&, bool>(client, true));
 	std::cout << "Channel " << _channelName << " created" << std::endl;
 }
 

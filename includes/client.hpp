@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 18:50:23 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:08:57 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ class Client
     
         bool operator==(const Client &c) const { return _clientSocket == c.getClientSocket(); }
         bool operator!=(const Client &c) const { return _clientSocket != c.getClientSocket(); }
-        bool operator<(const Client &c) const { return _clientSocket <= c.getClientSocket(); }
-        bool operator>(const Client &c) const { return _clientSocket >= c.getClientSocket(); }
+        bool operator<(const Client &c) const { return _clientSocket < c.getClientSocket(); }
+        bool operator>(const Client &c) const { return _clientSocket > c.getClientSocket(); }
         
     private:
         int _clientSocket;
