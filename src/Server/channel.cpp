@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/16 14:22:00 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:55:58 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 	_channelName = channelName;
 	_channelPassword = channelPassword;
 	// _channelClient[client] = true;
+	(void)client;
 	_channelClient.insert(std::pair<Client&, bool>(client, true));
 	std::cout << "Channel " << _channelName << " created" << std::endl;
 }
@@ -90,11 +91,10 @@ void Channel::sendChannelMsg(std::string msg)
 {
 	std::map<Client&, bool>::iterator it = _channelClient.begin();
 	std::string sendMsg;
-	std::cout << "Channel " << _channelName << " : " << msg << std::endl;
 	while (it != _channelClient.end())
 	{
 		sendMsg = _channelName + " " + it->first.getNickname() + " : " + msg;
-		// sendMsg += "\n\r";
+		sendMsg += "\n\r";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
 	}	

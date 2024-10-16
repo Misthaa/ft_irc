@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:28:33 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 15:27:03 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:54:05 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ void Server::channelMessage(std::string content, int i)
     {
         if (channelName == _channel[j].getChannelName())
         {
-            std::map<Client&, bool>::iterator it = _channel[j].getChannelClient().begin();
-            while (it != _channel[j].getChannelClient().end())
+            if (_channel[j].isClientInChannel(_client[i]) == true)
             {
-                if (it->first.getNickname() == _client[i].getNickname())
-                {
                     _channel[j].sendChannelMsg(message);
                     return ;
-                }
             }
             sendError(_client[i], "403", "* PRIVMSG :You're not on this channel");
             return ;
