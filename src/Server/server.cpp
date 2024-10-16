@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 20:25:04 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/16 21:56:12 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,6 @@ void Server::readData(char *BUFF, int i)
 			nickToken(content, i);
 		else if (token == "USER")
 			userToken(content, i);
-		else if (token == "PASS")
-			passToken(content, i);
 		else if (token == "QUIT")
 			quitToken(content, i);
 		else if (checkIsClient(i))
