@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/15 19:41:31 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:22:00 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 
 void Channel::addClient(Client &client)
 {
-	std::map<Client&, bool>::iterator it = _channelClient.find(client);
-	if (it != _channelClient.end())
+	if (isClientInChannel(client) == true)
 		return ;
-	_channelClient[client] = false;
+	_channelClient.insert(std::pair<Client&, bool>(client, true));
 	std::cout << "Client " << client.getNickname() << " joined channel " << _channelName << std::endl;
 }
 
@@ -95,7 +94,7 @@ void Channel::sendChannelMsg(std::string msg)
 	while (it != _channelClient.end())
 	{
 		sendMsg = _channelName + " " + it->first.getNickname() + " : " + msg;
-		sendMsg += "\n\r";
+		// sendMsg += "\n\r";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
 	}	
