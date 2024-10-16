@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 19:08:39 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:33:25 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void Server::readData(char *BUFF, int i)
 		buff = buff.substr(buff.find('\n') + 1);
 		if (buff.find('\n') == std::string::npos)
 			break ;
-		return;
 	}
 }
 

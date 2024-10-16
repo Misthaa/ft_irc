@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 15:23:51 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:30:24 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void Server::joinToken(std::string content, int i)
         sendError(_client[i], "461", "* JOIN :Not a channel");
         return;
     }
-    for (int j = 1; j < MAX_CHANNEL; j++)
+    for (int j = 0; j < MAX_CHANNEL; j++)
     {
         if (_channel[j].getChannelName() == content)
         {
             _channel[j].addClient(_client[i]);
-            _channel[i].sendChannelMsg("New user in channel : " + _client[i].getNickname() + "\n\r");
+            _channel[j].sendChannelMsg("New user in channel : " + _client[i].getNickname() + "\n\r");
             return ;
         }
     }

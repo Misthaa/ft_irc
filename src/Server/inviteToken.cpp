@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inviteToken.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 18:16:01 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:44:10 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void Server::inviteToken(std::string content, int i)
             {
                 if (_channel[k].getChannelName() == channelName)
                 {
-                    std::map<Client&, bool>::iterator it = _channel[k].getChannelClient().find(_client[i]);
+                    std::map<Client&, bool>::iterator it = _channel[k].getChannelClient().find(_client[j]);
                     if (it != _channel[k].getChannelClient().end())
                     {
                         sendError(_client[i], "403", "* INVITE :You're already on this channel");
