@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 19:33:25 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 20:25:04 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,22 @@ void Server::start(char **av)
 	setPassword(av[2]);
 }
 
+bool Server::checkIsClient(int i)
+{
+	if (_client[i].getNickname() == "")
+	{
+		sendError(_client[i], "451", "* :You have not registered");
+		return false;
+	}
+	if (_client[i].getUser() == "")
+	{
+		sendError(_client[i], "451", "* :You have not registered");
+		return false;
+	}
+	return true;
+	
+}
+
 void Server::readData(char *BUFF, int i)
 {
 	std::string buff = BUFF;
@@ -106,37 +122,38 @@ void Server::readData(char *BUFF, int i)
 			line = line.substr(0, line.find('\r')) + line.substr(line.find('\r') + 1);
 		token = line.substr(0, line.find(" "));
 		content = line.substr(line.find(" ") + 1);
-		std::cout << "Line: " << line << std::endl;
-		std::cout << "Token: " << token << std::endl;
-		std::cout << "Content: " << content << std::endl;
+		// std::cout << "Line: " << line << std::endl;
+		// std::cout << "Token: " << token << std::endl;
+		// std::cout << "Content: " << content << std::endl;
 		if (token == "NICK")
-		{
 			nickToken(content, i);
-		}
-		if (token == "USER")
-		{
+		else if (token == "USER")
 			userToken(content, i);
-		}
-		if (token == "PRIVMSG")
+		else if (token == "PASS")
+			passToken(content, i);
+		else if (token == "QUIT")
+			quitToken(content, i);
+		else if (checkIsClient(i))
 		{
-			prvMessageToken(content, i);
+			if (token == "PRIVMSG")
+				prvMessageToken(content, i);
+			else if (token == "JOIN")
+				joinToken(content, i);
+			else if (token == "INVITE")
+				inviteToken(content, i);
+			else if (token == "TOPIC")
+				topicToken(content, i);
+			else if (token == "KICK")
+				kickToken(content, i);
+			else if (token == "PART")
+				partToken(content, i);
+			else
+			{
+				std::string msg = ":localhost:" + _sPort + " 421 " + _client[i].getNickname() + " :Unknown command";
+				servSend(_fds[i].fd, msg);
+			}
 		}
-		if (token == "JOIN")
-		{
-			joinToken(content, i);
-		}
-		if (token == "INVITE")
-		{
-			inviteToken(content, i);
-		}
-		if (token == "TOPIC")
-		{
-			topicToken(content, i);
-		}
-        if (token == "KICK")
-        {
-            kickToken(content, i);
-        }
+		
 		buff = buff.substr(buff.find('\n') + 1);
 		if (buff.find('\n') == std::string::npos)
 			break ;
