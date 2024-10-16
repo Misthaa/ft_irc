@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 17:33:51 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:13:37 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void Server::topicToken(std::string content, int i)
             }
             _channel[j].setChannelTopic(topic);
             std::string msg = "Topic changed to " + topic;
-            _channel[j].sendChannelMsg(msg);
+            _channel[j].sendChannelMsg(msg , _client[i].getNickname());
             return ;
         }
     }

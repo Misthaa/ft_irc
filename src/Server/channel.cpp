@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/16 15:55:58 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:14:14 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ bool Channel::isClientInChannel(Client &client)
     return false;
 }
 
-void Channel::sendChannelMsg(std::string msg)
+void Channel::sendChannelMsg(std::string msg, std::string nickname)
 {
 	std::map<Client&, bool>::iterator it = _channelClient.begin();
 	std::string sendMsg;
 	while (it != _channelClient.end())
 	{
-		sendMsg = _channelName + " " + it->first.getNickname() + " : " + msg;
+		sendMsg = _channelName + " " + nickname + " : " + msg;
 		sendMsg += "\n\r";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;

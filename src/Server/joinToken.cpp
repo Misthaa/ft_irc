@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   joinToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/16 15:57:55 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:13:54 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void Server::joinToken(std::string content, int i)
         if (_channel[j].getChannelName() == content)
         {
             _channel[j].addClient(_client[i]);
-            _channel[j].sendChannelMsg("New user in channel : " + _client[i].getNickname());
+            _channel[j].sendChannelMsg("New user in channel : " + _client[i].getNickname(), _client[i].getNickname());
             return ;
         }
     }

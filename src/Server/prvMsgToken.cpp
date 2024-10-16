@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prvMsgToken.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:28:33 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 15:54:05 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:13:30 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void Server::channelMessage(std::string content, int i)
         {
             if (_channel[j].isClientInChannel(_client[i]) == true)
             {
-                    _channel[j].sendChannelMsg(message);
+                    _channel[j].sendChannelMsg(message, _client[i].getNickname());
                     return ;
             }
             sendError(_client[i], "403", "* PRIVMSG :You're not on this channel");

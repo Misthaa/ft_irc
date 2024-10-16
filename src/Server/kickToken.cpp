@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kickToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 19:46:44 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:44:55 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void Server::kickToken(std::string content, int i)
 						sendError(_client[i], "403", "* KICK :You're not operator of this channel");
 						return ;
 					}
-					// _channel[k].removeClient(_client[j]);
+					_channel[k].removeClient(_client[j]);
 					std::string msg = "You have been kicked from channel " + channelName;
 					servSend(_fds[j].fd, msg);
 					return ;
