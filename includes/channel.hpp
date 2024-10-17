@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:13:04 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:56:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class Channel
 		void addClient(Client &client);
 		void removeClient(Client &client);
 		void sendChannelMsg(std::string msg, std::string nickname);
+		void sendToAll(std::string msg);
 		void setChannelTopic(std::string channelTopic) { _channelTopic = channelTopic; };
 		std::string getChannelTopic() { return _channelTopic; };
 		bool isClientInChannel(Client &client);

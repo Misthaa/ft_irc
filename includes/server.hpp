@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 19:32:39 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:31:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,9 @@ class Server
         void sendError(Client& client, std::string errorCode, std::string errorMsg);
 
 };
+
+
+//utils :   
+std::string	ft_clearString(const std::string &str);
 
 #endif

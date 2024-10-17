@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 21:56:12 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:32:52 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void Server::readData(char *BUFF, int i)
 	std::string token;
 	std::string content;
 	
-	while (BUFF[0])
+	
+	std::cout << "3'----------------\n" << BUFF << "\n----------------5'" << std::endl;
+
+	while (buff[0])
 	{
 		if (buff.find("\n") == std::string::npos)
 			line = buff.substr(0, buff.length());
@@ -122,15 +125,17 @@ void Server::readData(char *BUFF, int i)
 			line = line.substr(0, line.find('\r')) + line.substr(line.find('\r') + 1);
 		token = line.substr(0, line.find(" "));
 		content = line.substr(line.find(" ") + 1);
-		// std::cout << "Line: " << line << std::endl;
-		// std::cout << "Token: " << token << std::endl;
-		// std::cout << "Content: " << content << std::endl;
+		// std::cout << "Token: " << token << " --> Content: " << content << std::endl;
 		if (token == "NICK")
 			nickToken(content, i);
 		else if (token == "USER")
 			userToken(content, i);
 		else if (token == "QUIT")
 			quitToken(content, i);
+		else if (token == "PASS")
+			 ;
+		else if (token == "CAP" || token == "PING" || token == "PONG" || token == "WHO")
+			 ;
 		else if (checkIsClient(i))
 		{
 			if (token == "PRIVMSG")
@@ -151,10 +156,9 @@ void Server::readData(char *BUFF, int i)
 				servSend(_fds[i].fd, msg);
 			}
 		}
-		
-		buff = buff.substr(buff.find('\n') + 1);
 		if (buff.find('\n') == std::string::npos)
 			break ;
+		buff = buff.substr(buff.find('\n') + 1);
 	}
 }
 
@@ -224,7 +228,6 @@ int Server::acceptClient()
 				std::cout << _client[i].getNickname() << " : " << BUFF[i] << std::endl;
 			token = token.substr(0, token.find(" "));
 			content = content.substr(content.find(" ") + 1);
-			// readData(token, content, i);
 			readData(BUFF[i], i);
 		}
 		i++;

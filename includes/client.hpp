@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 19:08:57 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:25:12 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ class Client
         Client();
         ~Client();
         void start(char **av);
+        void closeClient();
+
         
         const std::string &getNickname() const{ return _nickname; }
+        const std::string &getUser() const { return _user; }
         std::string &getUser() { return _user; }
         int  getClientSocket() const {return _clientSocket; }
         void setNickname(std::string nickname) { _nickname = nickname; }

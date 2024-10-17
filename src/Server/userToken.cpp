@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   userToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/14 17:43:51 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:07:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ void Server::userToken(std::string content, int i)
 {
     int countWord = 0;
 
-    if (_client[i].getNickname() == "")
-    {
-        sendError(_client[i], "", "* USER :Nickname need to be specify to define user");
-        return;
-    }
     countWord = std::count(content.begin(), content.end(), ' ') + 1;
+    content = content.substr(0, content.find(" "));
     if (countWord < 1)
     {
         sendError(_client[i], "461", "* USER :Not enough parameters");
@@ -46,6 +42,6 @@ void Server::userToken(std::string content, int i)
         }
     }
     _client[i].setUser(content);
-    std::string msg = "name : " + _client[i].getUser();
+    std::string msg = "user : " + _client[i].getUser();
     servSend(_fds[i].fd, msg);
 }

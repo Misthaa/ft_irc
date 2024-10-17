@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:24 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/11 18:21:52 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:19:12 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ Client::Client()
 Client::~Client()
 {
     close(_clientSocket);
+}
+
+void Client::closeClient()
+{
+    if (_clientSocket != -1)
+        close(_clientSocket);
+    _clientSocket = -1;
 }
 
 void Client::start(char **av)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nickToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/14 17:43:49 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:11:27 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void Server::nickToken(std::string content, int i)
     int countWord = 0;
 
     countWord = std::count(content.begin(), content.end(), ' ') + 1;
+    content = content.substr(0, content.find(" "));
     if (countWord < 1)
     {
         sendError(_client[i], "461", "* NICK :Not enough parameters");
@@ -36,11 +37,19 @@ void Server::nickToken(std::string content, int i)
     {
         if (_client[j].getNickname() == content)
         {
-            sendError(_client[i], "462", "* NICK :Unauthorized command (already registered)");
+            sendError(_client[i], "433", "* NICK : Nickname is already in use");
             return ;
         }
     }
+    std::string msg;
+    if (_client[i].getNickname() == "")
+    {
+        msg = ":localhost:" + _sPort + " 001 " + content + " :Welcome to the IRC network, " + content;
+        servSend(_fds[i].fd, msg);
+    }
+    msg = ":" + _client[i].getNickname() + "!@localhost:" +  " NICK :" + content;
+    // std::string msg = "@time=2024-10-17T18:41:51.090Z :roguigna__!~issou@IRC4Fun-9h47g0.20.unyc.it NICK :caca";
+    
     _client[i].setNickname(content);
-    std::string msg = "name : " + _client[i].getNickname();
     servSend(_fds[i].fd, msg);
 }

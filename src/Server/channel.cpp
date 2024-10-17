@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:14:14 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:20:14 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void Channel::start(std::string channelName, std::string channelPassword, Client
 {
 	_channelName = channelName;
 	_channelPassword = channelPassword;
-	// _channelClient[client] = true;
-	(void)client;
 	_channelClient.insert(std::pair<Client&, bool>(client, true));
+	_channelTopic = "(no topic)";
 	std::cout << "Channel " << _channelName << " created" << std::endl;
 }
 
@@ -87,17 +86,31 @@ bool Channel::isClientInChannel(Client &client)
     return false;
 }
 
+void Channel::sendToAll(std::string msg)
+{
+	std::map<Client&, bool>::iterator it = _channelClient.begin();
+	while (it != _channelClient.end())
+	{
+		send(it->first.getClientSocket(), msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
+		it++;
+	}
+}
+
 void Channel::sendChannelMsg(std::string msg, std::string nickname)
 {
 	std::map<Client&, bool>::iterator it = _channelClient.begin();
 	std::string sendMsg;
 	while (it != _channelClient.end())
 	{
-		sendMsg = _channelName + " " + nickname + " : " + msg;
-		sendMsg += "\n\r";
+		if (it->first.getNickname() == nickname)
+		{
+			it++;
+			continue;
+		}
+		sendMsg = ":" + nickname + "!" + "localhost" + " PRIVMSG " + _channelName + " :" + msg + "\n";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
-	}	
+	}
 }
 
 Channel::~Channel()
