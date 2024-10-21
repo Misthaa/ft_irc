@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/17 20:32:52 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:59:43 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,16 @@ void Server::start(char **av)
 	setPassword(av[2]);
 }
 
+int Server::isClientExist(std::string nickname)
+{
+	for (int i = 1; i < MAX_CLIENT; i++)
+	{
+		if (_client[i].getNickname() == nickname)
+			return i;
+	}
+	return 0;
+}
+
 bool Server::checkIsClient(int i)
 {
 	if (_client[i].getNickname() == "")
@@ -150,6 +160,8 @@ void Server::readData(char *BUFF, int i)
 				kickToken(content, i);
 			else if (token == "PART")
 				partToken(content, i);
+			else if (token == "MODE")
+				modeToken(content, i);
 			else
 			{
 				std::string msg = ":localhost:" + _sPort + " 421 " + _client[i].getNickname() + " :Unknown command";

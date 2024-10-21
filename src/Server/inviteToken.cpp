@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/15 19:44:10 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:21:33 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void Server::inviteToken(std::string content, int i)
                         sendError(_client[i], "403", "* INVITE :You're already on this channel");
                         return ;
                     }
-                    _channel[k].addClient(_client[j]);
-                    _channel[k].addInviteList(&content);
+                    _channel[k].addInviteList(nickname);
                     std::string msg = "You have been invited to channel " + channelName;
                     servSend(_fds[j].fd, msg);
                     return ;

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/17 10:31:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:48:11 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ class Server
         void passToken(std::string content, int i);
         void quitToken(std::string content, int i);
         void partToken(std::string content, int i);
-
+        void modeToken(std::string content, int i);
+        int  execMode(std::string mode, std::string infos, int channelIndex, int clientIndex);
+        int  isClientExist(std::string nickname);
 
 
         void servSend(int fd, std::string msg);
@@ -83,5 +85,6 @@ class Server
 
 //utils :   
 std::string	ft_clearString(const std::string &str);
+int ft_stoi(const std::string &str);
 
 #endif

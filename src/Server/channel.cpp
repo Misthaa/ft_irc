@@ -6,17 +6,20 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 13:44:42 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:16:42 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "channel.hpp"
+# include "server.hpp"
 
 Channel::Channel()
 {
 	_channelName = "";
 	_channelPassword = "";
 	_channelTopic = "";
+	_changeTopic = false;
+	_channelOnInvite = false;
+	_userLimit = MAX_CLIENT	;
 }
 
 void Channel::start(std::string channelName, std::string channelPassword, Client &client)
@@ -66,12 +69,12 @@ int Channel::isOperator(Client &client)
 	return 0;
 }
 
-void Channel::addInviteList(std::string *channelInviteList)
+void Channel::addInviteList(std::string channelInviteList)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		if (channelInviteList[i] == "")
-			_channelInviteList[i] = channelInviteList[i];
+		if (_channelInviteList[i] == "")
+			_channelInviteList[i] = channelInviteList;
 		break;
 	}
 }
@@ -84,6 +87,17 @@ bool Channel::isClientInChannel(Client &client)
 			return true;
     }
     return false;
+}
+
+bool Channel::isInvited(std::string nickname)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		std::cout << "nickname: " << _channelInviteList[i] << std::endl;
+		if (_channelInviteList[i] == nickname)
+			return true;
+	}
+	return false;
 }
 
 void Channel::sendToAll(std::string msg)
@@ -109,6 +123,20 @@ void Channel::sendChannelMsg(std::string msg, std::string nickname)
 		}
 		sendMsg = ":" + nickname + "!" + "localhost" + " PRIVMSG " + _channelName + " :" + msg + "\n";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
+		it++;
+	}
+}
+
+void Channel::setOperator(Client &client, bool op)
+{
+	std::map<Client&, bool>::iterator it = _channelClient.begin();
+	while (it != _channelClient.end())
+	{
+		if (it->first == client)
+		{
+			it->second = op;
+			return ;
+		}
 		it++;
 	}
 }

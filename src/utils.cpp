@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:29:44 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/17 10:29:58 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:47:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,23 @@ std::string	ft_clearString(const std::string &str)
 			break;
 	}
 	return (clearLine);
+}
+
+int	ft_stoi(const std::string &str)
+{
+	int res = 0;
+	int sign = 1;
+	int i = 0;
+
+	if (str[0] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	while (str[i])
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	return (res * sign);
 }

@@ -6,7 +6,7 @@
 #    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/17 10:32:44 by roguigna         ###   ########.fr        #
+#    Updated: 2024/10/21 15:06:57 by roguigna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS        =	main.cpp\
 				src/Server/kickToken.cpp\
 				src/Server/quitToken.cpp\
 				src/Server/partToken.cpp\
+				src/Server/modeToken.cpp\
 				src/utils.cpp\
 
 # Nom de l'exécutable
