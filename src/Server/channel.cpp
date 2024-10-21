@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 10:12:47 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:57:50 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void Channel::addInviteList(std::string *channelInviteList)
 bool Channel::isClientInChannel(Client &client)
 {
     for (std::map<Client&, bool>::iterator it = _channelClient.begin(); it != _channelClient.end(); it++)
-    {
-        if (it->first.getNickname() == client.getNickname())
-            return true;
+	{
+		if (it->first.getNickname() == client.getNickname())
+			return true;
     }
     return false;
 }
