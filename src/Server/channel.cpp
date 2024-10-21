@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/17 21:20:14 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:12:47 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void Channel::addClient(Client &client)
 {
 	if (isClientInChannel(client) == true)
 		return ;
-	_channelClient.insert(std::pair<Client&, bool>(client, true));
+	_channelClient.insert(std::pair<Client&, bool>(client, false)); 
 	std::cout << "Client " << client.getNickname() << " joined channel " << _channelName << std::endl;
 }
 
