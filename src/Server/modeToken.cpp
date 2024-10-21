@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:02:31 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 18:16:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:05:07 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void Server::modeToken(std::string content, int i)
     std::cout << "channelName: " << channelName << std::endl;
     std::cout << "mode: " << mode << std::endl;
     std::cout << "infos: " << infos << std::endl;
+    if (countWord(content) < 2)
+        return;
     for (int j = 0; j < MAX_CHANNEL; j++)
     {
         if (channelName == _channel[j].getChannelName())

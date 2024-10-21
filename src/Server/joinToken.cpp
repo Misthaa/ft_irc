@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 19:13:08 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:35:39 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void Server::joinToken(std::string content, int i)
 	{
 		if (_channel[channelIndex].getChannelName() == content)
 		{
-			if (_channel[channelIndex].getChannelOnInvite() == 1 && _channel[channelIndex].isInvited(_client[i].getNickname()) == true)
+			if ((_channel[channelIndex].getChannelOnInvite() == 1 && _channel[channelIndex].isInvited(_client[i].getNickname()) == true) ||  _channel[channelIndex].isInvited(_client[i].getNickname()) == true)
 				;
 			else
 			{
@@ -58,6 +58,11 @@ void Server::joinToken(std::string content, int i)
 				if (_channel[channelIndex].getChannelOnInvite() == 1 && _channel[channelIndex].isInvited(_client[i].getNickname()) == false)
 				{
 					sendError(_client[i], "473", "* JOIN :You're not invited on this channel");
+					return;
+				}
+				if ((int)_channel[channelIndex].getChannelClient().size() >= _channel[channelIndex].getUserLimit())
+				{
+					sendError(_client[i], "471", "* JOIN :Channel is full");
 					return;
 				}
 			}
