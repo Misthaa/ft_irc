@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 13:44:39 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:33:22 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void Server::joinToken(std::string content, int i)
 				_channel[channelIndex].sendToAll(msg);
 				break;
 			}
-			i++;
+			channelIndex++;
 		}
 	}
 	msg = ":localhost 353 " + _client[i].getNickname() + " = " + content + " :";
