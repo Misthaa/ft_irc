@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 11:14:51 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:52:32 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void Server::kickToken(std::string content, int i)
 						sendError(_client[i], "403", "* KICK :You're not operator of this channel");
 						return ;
 					}
+					std::string msg = ":localhost KICK " + _channel[k].getChannelName() + " " + nickname + " " + reason + "\n";
+					_channel[k].sendToAll(msg);
 					_channel[k].removeClient(_client[j]);
-					std::string msg = ":localhost KICK " + _channel[j].getChannelName() + " " + nickname + " " + reason + "\n";
-					_channel[j].sendToAll(msg);
 					return ;
 				}
 			}
