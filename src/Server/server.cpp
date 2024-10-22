@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 16:24:34 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:33:31 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ bool Server::checkIsClient(int i)
 		sendError(_client[i], "451", "* :You have not registered");
 		return false;
 	}
+	if (_client[i].getCorrectPassword() == false)
+	{
+		sendError(_client[i], "451", "* :You have not registered");
+		return false;
+	}
 	return true;
 	
 }
@@ -149,7 +154,7 @@ void Server::readData(char *BUFF, int i)
 		else if (token == "QUIT")
 			quitToken(content, i);
 		else if (token == "PASS")
-			 ;
+			passToken(content, i);
 		else if (token == "CAP" || token == "PING" || token == "PONG" || token == "WHO")
 			 ;
 		else if (checkIsClient(i))

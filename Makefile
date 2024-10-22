@@ -6,7 +6,7 @@
 #    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/21 15:06:57 by roguigna         ###   ########.fr        #
+#    Updated: 2024/10/22 17:21:16 by roguigna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS        =	main.cpp\
 				src/Server/server.cpp\
 				src/Server/nickToken.cpp\
 				src/Server/userToken.cpp \
+				src/Server/passToken.cpp\
 				src/Server/channel.cpp\
 				src/Server/joinToken.cpp\
 				src/Server/prvMsgToken.cpp\

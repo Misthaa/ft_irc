@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/17 18:25:12 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:15:28 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ class Client
         void setNickname(std::string nickname) { _nickname = nickname; }
         void setUser(std::string user) { _user = user; }
         void setClientSocket(int client) { _clientSocket = client; }
+        bool getCorrectPassword() const { return _correctPassword; }
+        void setCorrectPassword(bool correctPassword) { _correctPassword = correctPassword; }
     
         bool operator==(const Client &c) const { return _clientSocket == c.getClientSocket(); }
         bool operator!=(const Client &c) const { return _clientSocket != c.getClientSocket(); }
@@ -45,6 +47,7 @@ class Client
         
     private:
         int _clientSocket;
+        bool _correctPassword;
         std::string _nickname;
         std::string _user;
 };

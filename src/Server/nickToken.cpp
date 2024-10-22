@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 16:26:22 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:02:44 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,25 @@ void Server::nickToken(std::string content, int i)
         }
     }
     std::string msg;
+    std::cout << "NICK: " << _client[i].getNickname() << std::endl;
     if (_client[i].getNickname() == "")
     {
-        msg = ":localhost:" + _sPort + " 001 " + content + " :Welcome to the IRC network, " + content;
+        if (_client[i].getUser() != "" && _client[i].getCorrectPassword() == true)
+        {
+            std::cout << "je passe par ;a " << std::endl;
+            msg = ":localhost:" + _sPort + " 001 " + content + " :Welcome to IRC " + content + "!";
+            servSend(_fds[i].fd, msg);
+        }
+        else
+        {
+            msg = ":localhost:" + _sPort + " 001 " + content + " :Registered nickname " + content;
+            servSend(_fds[i].fd, msg);
+        }
+    }
+    else
+    {
+        msg = ":" + _client[i].getNickname() + "!@localhost:" +  " NICK :" + content;
         servSend(_fds[i].fd, msg);
     }
-    msg = ":" + _client[i].getNickname() + "!@localhost:" +  " NICK :" + content;
     _client[i].setNickname(content);
-    servSend(_fds[i].fd, msg);
 }

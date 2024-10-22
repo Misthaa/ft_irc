@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/22 16:03:08 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:04:09 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,9 @@ void Server::userToken(std::string content, int i)
     _client[i].setUser(content);
     std::string msg = "user : " + _client[i].getUser();
     servSend(_fds[i].fd, msg);
+    if (_client[i].getNickname() != "" && _client[i].getCorrectPassword() == true)
+    {
+        msg = ":localhost:" + _sPort + " 001 " + _client[i].getNickname() + " :Welcome to IRC " + _client[i].getNickname() + "!";
+        servSend(_fds[i].fd, msg);
+    }
 }
