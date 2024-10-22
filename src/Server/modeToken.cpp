@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modeToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:22:02 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 17:11:12 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:36:30 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,16 @@ int Server::execMode(std::string mode, std::string infos, int channelIndex, int 
 
     for (int i = 0; i < (int)mode.length(); i++)
     {
+        std::cout << "infos : " << infos << std::endl;
         if (mode[i] == '+' || mode[i] == '-')
         {
             sign = mode[i];
             i++;
         }
         if (sign == '-')
-            negativeMode(mode[i], infos, channelIndex, clientIndex);
+            infos = negativeMode(mode[i], infos, channelIndex, clientIndex);
         else
-            positiveMode(mode[i], infos, channelIndex, clientIndex);
+            infos = positiveMode(mode[i], infos, channelIndex, clientIndex);
     }
     return 1;
 }

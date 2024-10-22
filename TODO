@@ -1,2 +1,5 @@
-ctrl+d
-privmsg check khoya                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+valgrind : nv channel : ctrl+C
+/part ne quitte pas channel sur hexchat 
+/part ne detruit pas le channel si plus user
+mode quand pas assez argument : * /mode +okl roguigna coucou
+                                * -k wrong pass
