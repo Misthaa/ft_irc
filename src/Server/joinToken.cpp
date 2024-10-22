@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 19:35:39 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:04:39 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void Server::joinToken(std::string content, int i)
 {
-	int countWord = 0;
+	int nbWord = 0;
 	int existantChannel = 0;
 	int channelIndex = 0;
 	std::string msg;
 	
-	countWord = std::count(content.begin(), content.end(), ' ') + 1;
+	nbWord = countWord(content);
 	std::string args = content.substr(content.find(" ") + 1);
 	std::cout << "args: " << args << std::endl;
 	content = content.substr(0, content.find(" "));
-	if (countWord < 1)
+	if (nbWord < 1)
 	{
 		sendError(_client[i], "461", "* JOIN :Not enough parameters");
 		return;
@@ -46,10 +46,6 @@ void Server::joinToken(std::string content, int i)
 				;
 			else
 			{
-				std::cout << "channel password: " << _channel[channelIndex].getChannelPassword() << std::endl;
-				std::cout << "content: " << args.substr(0, args.find(" ")) << std::endl;
-				std::cout << "on invite: " << _channel[channelIndex].getChannelOnInvite() << std::endl;
-				std::cout << "is invited: " << _channel[channelIndex].isInvited(_client[i].getNickname()) << std::endl;
 				if (_channel[channelIndex].getChannelPassword() != "" && _channel[channelIndex].getChannelPassword() != args.substr(0, args.find(" ") ))
 				{
 					sendError(_client[i], "475", "* JOIN :Wrong password");

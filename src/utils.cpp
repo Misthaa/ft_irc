@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:29:44 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/22 11:14:46 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:27:01 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,16 @@ std::string normalizeSpaces(const std::string& input) {
 int countWord(const std::string &str)
 {
 	int count = 0;
-
+	int c = 0;
+	
 	for (int i = 0; str[i]; i++)
 	{
+		if (!isspace(str[i]))
+			c++;
 		if (str[i] == ' ')
 			count++;
 	}
+	if (c == 0)
+		return (0);
 	return (count + 1);
 }

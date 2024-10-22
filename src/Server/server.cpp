@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 11:07:47 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:24:34 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void Server::readData(char *BUFF, int i)
 	std::string line;
 	std::string token;
 	std::string content;
+	int 	indexContent;
 	
 	buff = normalizeSpaces(BUFF);
 	
@@ -135,8 +136,12 @@ void Server::readData(char *BUFF, int i)
 		if (line.find('\r') != std::string::npos)
 			line = line.substr(0, line.find('\r')) + line.substr(line.find('\r') + 1);
 		token = line.substr(0, line.find(" "));
-		content = line.substr(line.find(" ") + 1);
-		// std::cout << "Token: " << token << " --> Content: " << content << std::endl;
+		indexContent = line.find(" ");
+		if (indexContent == -1)
+			content = "";
+		else
+			content = line.substr(line.find(" ") + 1);
+		std::cout << "Token: " << token << " --> Content: " << content << std::endl;
 		if (token == "NICK")
 			nickToken(content, i);
 		else if (token == "USER")

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/17 20:07:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:03:08 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void Server::userToken(std::string content, int i)
 {
-    int countWord = 0;
+    int nbWord = 0;
 
-    countWord = std::count(content.begin(), content.end(), ' ') + 1;
+    nbWord = countWord(content);
     content = content.substr(0, content.find(" "));
-    if (countWord < 1)
+    if (nbWord < 1)
     {
         sendError(_client[i], "461", "* USER :Not enough parameters");
         return;

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:28:33 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 20:23:51 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:03:46 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void Server::channelMessage(std::string content, int i)
 
     channelName = content.substr(0, content.find(" "));
     message = content.substr(content.find(" ") + 1);
-    std::cout << "channelName : " << channelName << std::endl;
     for (int j = 0; j < MAX_CHANNEL; j++)
     {
         if (channelName == _channel[j].getChannelName())
