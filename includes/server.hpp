@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 11:07:03 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:07:55 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ class Server
         void partToken(std::string content, int i);
         void modeToken(std::string content, int i);
         int  execMode(std::string mode, std::string infos, int channelIndex, int clientIndex);
+        std::string  negativeMode(char mode, std::string infos, int channelIndex, int clientIndex);
+        std::string positiveMode(char mode, std::string infos, int channelIndex, int clientIndex);
         int  isClientExist(std::string nickname);
 
 
