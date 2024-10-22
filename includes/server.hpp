@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 20:04:34 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:07:03 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ class Server
 std::string	ft_clearString(const std::string &str);
 int ft_stoi(const std::string &str);
 int countWord(const std::string &str);
+std::string normalizeSpaces(const std::string& input);
 
 #endif

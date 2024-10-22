@@ -1,11 +1,13 @@
 {
     "files.associations": {
+        "*.rmd": "markdown",
         "iostream": "cpp",
         "ostream": "cpp",
         "stdexcept": "cpp",
         "string": "cpp",
         "*.tcc": "cpp",
         "cstring": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "iosfwd": "cpp"
     }
 }

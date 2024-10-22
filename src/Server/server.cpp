@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 16:59:43 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:07:47 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,14 @@ bool Server::checkIsClient(int i)
 
 void Server::readData(char *BUFF, int i)
 {
-	std::string buff = BUFF;
+	std::string buff;
 	std::string line;
 	std::string token;
 	std::string content;
 	
+	buff = normalizeSpaces(BUFF);
 	
-	std::cout << "3'----------------\n" << BUFF << "\n----------------5'" << std::endl;
+	std::cout << "3'----------------\n" << buff << "\n----------------5'" << std::endl;
 
 	while (buff[0])
 	{

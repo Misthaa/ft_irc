@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 19:16:42 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:16:24 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ bool Channel::isInvited(std::string nickname)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		std::cout << "nickname: " << _channelInviteList[i] << std::endl;
 		if (_channelInviteList[i] == nickname)
 			return true;
 	}

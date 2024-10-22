@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:29:44 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 20:04:08 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:14:46 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,28 @@ int	ft_stoi(const std::string &str)
 	}
 	return (res * sign);
 }
+
+std::string normalizeSpaces(const std::string& input) {
+	std::string result;
+	bool inSpaces = false;
+
+	for (std::string::const_iterator it = input.begin(); it != input.end(); ++it) {
+		char ch = *it;
+
+		if (ch == ' ') {
+			if (!inSpaces) {
+				result += ' ';
+				inSpaces = true;
+			}
+		} else {
+			result += ch;
+			inSpaces = false;
+		}
+	}
+
+	return result;
+}
+
 
 int countWord(const std::string &str)
 {
