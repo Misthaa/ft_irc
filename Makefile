@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
+#    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/22 17:21:16 by roguigna         ###   ########.fr        #
+#    Updated: 2024/10/22 19:30:35 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,23 @@ SRCS        =	main.cpp\
 				src/Server/modeToken.cpp\
 				src/utils.cpp\
 
+SRCS_BONUS	=	src_bonus/main.cpp\
+				src_bonus/botVinted.cpp\
+
 # Nom de l'exécutable
 NAME        =    ircserv
+
+NAME_BONUS	=	botVinted
 
 # Répertoire pour les fichiers objets
 OBJ_DIR     =    obj
 
+OBJ_DIR_BONUS = obj_bonus
+
 # Objets (les .o seront créés dans le répertoire obj/)
 OBJS        =    $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+
+OBJS_BONUS	=	$(addprefix $(OBJ_DIR_BONUS)/, $(SRCS_BONUS:.cpp=.o))
 
 # Compilateur et options
 CXX         =    c++
@@ -54,8 +63,19 @@ $(NAME) : $(OBJS)
 	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 	@echo "$(GREEN)Compilation de IRC...$(NC)"
 
+bonus : $(NAME_BONUS) 
+	@$(CXX) $(CXXFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS)
+	@echo "$(GREEN)Compilation de botVinted...$(NC)"
+
+$(NAME_BONUS) : $(OBJS_BONUS)
+	@$(CXX) $(CXXFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS)
+
 # Compilation des fichiers .cpp en .o dans obj/
 $(OBJ_DIR)/%.o : %.cpp | $(OBJ_DIR)
+	@mkdir -p $(@D)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR_BONUS)/%.o : %.cpp | $(OBJ_DIR_BONUS)
 	@mkdir -p $(@D)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
@@ -63,9 +83,13 @@ $(OBJ_DIR)/%.o : %.cpp | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
+$(OBJ_DIR_BONUS):
+	@mkdir -p $(OBJ_DIR_BONUS)
+
 # Nettoyage des fichiers objets
 clean :
 	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR_BONUS)
 	@echo "$(YELLOW)Nettoyage en cours...$(NC)"
 	@echo "$(YELLOW)Nettoyage terminé.$(NC)"
 
