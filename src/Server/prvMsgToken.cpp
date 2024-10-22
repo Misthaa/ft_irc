@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prvMsgToken.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:28:33 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 17:13:30 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:23:51 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void Server::prvMessage(std::string content, int i)
     {
         if (_client[j].getNickname() == nickname)
         {
-            std::string msg = _client[i].getNickname() + " : " + message;
+            std::string msg = ":" + _client[i].getNickname() + " PRIVMSG " + nickname + " " + message + "\n";
             servSend(_fds[j].fd, msg);
             return ;
         }

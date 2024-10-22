@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topicToken.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 17:13:37 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:52:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void Server::topicToken(std::string content, int i)
     {
         if (channelName == _channel[j].getChannelName())
         {
-            if (_channel[j].isOperator(_client[i]) == 0)
+            if (_channel[j].isOperator(_client[i]) == 0 && _channel[j].getChangeTopic() == true)
             {
-                sendError(_client[i], "482", "* TOPIC :You're not operator of this channel");
+                sendError(_client[i], "482", "* TOPIC :You must be operator to change the topic of this channel");
                 return ;
             }
             _channel[j].setChannelTopic(topic);
-            std::string msg = "Topic changed to " + topic;
-            _channel[j].sendChannelMsg(msg , _client[i].getNickname());
+            std::string msg = ":localhost TOPIC " + channelName + " " + topic + "\n";
+            _channel[j].sendToAll(msg);
             return ;
         }
     }

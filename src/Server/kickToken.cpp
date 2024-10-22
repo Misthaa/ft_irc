@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kickToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 16:44:55 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:52:32 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ void Server::kickToken(std::string content, int i)
 {
 	std::string nickname;
 	std::string channelName;
+	std::string reason;
 
-	nickname = content.substr(0, content.find(" "));
-	channelName = content.substr(content.find(" ") + 1);
+	nickname = content.substr(content.find(" ") + 1, content.find(" ", content.find(" ") + 1) - content.find(" ") - 1);
+	channelName = content.substr(0, content.find(" "));
+	reason = channelName.substr(channelName.find(" ") + 1);
+	std::cout << "nickname: " << nickname << std::endl;
+	std::cout << "channelName: " << channelName << std::endl;
+	std::cout << "reason: " << reason << std::endl;
 	for (int j = 1; j < MAX_CLIENT; j++)
 	{
 		if (_client[j].getNickname() == nickname)
@@ -37,9 +42,9 @@ void Server::kickToken(std::string content, int i)
 						sendError(_client[i], "403", "* KICK :You're not operator of this channel");
 						return ;
 					}
+					std::string msg = ":localhost KICK " + _channel[k].getChannelName() + " " + nickname + " " + reason + "\n";
+					_channel[k].sendToAll(msg);
 					_channel[k].removeClient(_client[j]);
-					std::string msg = "You have been kicked from channel " + channelName;
-					servSend(_fds[j].fd, msg);
 					return ;
 				}
 			}

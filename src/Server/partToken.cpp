@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   partToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:21:54 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/16 19:48:55 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:48:18 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void Server::partToken(std::string content, int i)
                 return ;
             }
             _channel[j].removeClient(_client[i]);
-            std::string msg = "You have left channel " + channelName;
-            servSend(_fds[i].fd, msg);
+            std::string msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost PART " + channelName + "\n";
+            _channel[j].sendToAll(msg);
             return ;
         }
     }

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/17 21:11:27 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:58:27 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void Server::nickToken(std::string content, int i)
         servSend(_fds[i].fd, msg);
     }
     msg = ":" + _client[i].getNickname() + "!@localhost:" +  " NICK :" + content;
-    // std::string msg = "@time=2024-10-17T18:41:51.090Z :roguigna__!~issou@IRC4Fun-9h47g0.20.unyc.it NICK :caca";
-    
     _client[i].setNickname(content);
     servSend(_fds[i].fd, msg);
 }
