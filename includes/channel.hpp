@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/21 19:16:54 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:58:49 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ class Channel
 		void start(std::string channelName, std::string channelPassword, Client &channelClient);
 		void addClient(Client &client);
 		void removeClient(Client &client);
+		void clear();
 		void sendChannelMsg(std::string msg, std::string nickname);
 		void sendToAll(std::string msg);
 		void setChannelTopic(std::string channelTopic) { _channelTopic = channelTopic; };
 		std::string getChannelTopic() { return _channelTopic; };
 		bool isClientInChannel(Client &client);
 		bool isInvited(std::string nickname);
+		bool isEmptyChan();
 
 
 		std::string getChannelName() { return _channelName; }

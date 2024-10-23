@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:21:54 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 10:48:18 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:58:21 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void Server::partToken(std::string content, int i)
                 sendError(_client[i], "403", "* PART :You're not on this channel");
                 return ;
             }
-            _channel[j].removeClient(_client[i]);
-            std::string msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost PART " + channelName + "\n";
+            std::string msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost PART " + channelName + " :leaving\n";
             _channel[j].sendToAll(msg);
+            _channel[j].removeClient(_client[i]);
+            if (_channel[j].isEmptyChan() == true)
+                _channel[j].clear();
             return ;
         }
     }

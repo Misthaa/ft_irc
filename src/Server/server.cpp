@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 14:24:23 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:51:26 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void Server::readData(std::string *BUFF, int i)
 	
 	buff = normalizeSpaces(*BUFF);
 	
-	std::cout << "3'----------------\n" << buff << "\n----------------5'" << std::endl;
+	std::cout << "3'----------------\n" << buff << "----------------5'" << std::endl;
 	if (buff.find("\n") == std::string::npos)
 		return ;
 	else

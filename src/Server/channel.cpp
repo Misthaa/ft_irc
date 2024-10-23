@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/22 11:16:24 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:02:10 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ Channel::Channel()
 	_changeTopic = false;
 	_channelOnInvite = false;
 	_userLimit = MAX_CLIENT	;
+	for (int i = 0; i < 100; i++)
+		_channelInviteList[i] = "";
 }
 
 void Channel::start(std::string channelName, std::string channelPassword, Client &client)
@@ -51,6 +53,18 @@ void Channel::removeClient(Client &client)
 		}
 		it++;
 	}
+}
+
+void Channel::clear(){
+	_channelClient.clear();
+	_channelName = "";
+	_channelPassword = "";
+	_channelTopic = "";
+	_changeTopic = false;
+	_channelOnInvite = false;
+	_userLimit = MAX_CLIENT;
+	for (int i = 0; i < 100; i++)
+		_channelInviteList[i] = "";
 }
 
 int Channel::isOperator(Client &client)
@@ -97,6 +111,16 @@ bool Channel::isInvited(std::string nickname)
 			return true;
 	}
 	return false;
+}
+
+bool Channel::isEmptyChan()
+{
+	for (std::map<Client&, bool>::iterator it = _channelClient.begin(); it != _channelClient.end(); it++)
+	{
+		if (it->first.getNickname() != "")
+			return false;
+    }
+	return true;
 }
 
 void Channel::sendToAll(std::string msg)
