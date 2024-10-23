@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 16:51:26 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:16:09 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ Server::Server()
 
 Server::~Server()
 {
-	close(_serverSocket);
 	std::cout << "Server socket closed" << std::endl;
+	close(_serverSocket);
 }
 
 void Server::setPort(char *port)
@@ -156,7 +156,7 @@ void Server::readData(std::string *BUFF, int i)
 		else if (token == "USER")
 			userToken(content, i);
 		else if (token == "QUIT")
-			quitToken(content, i);
+			quitToken(i);
 		else if (token == "PASS")
 			passToken(content, i);
 		else if (token == "CAP" || token == "PING" || token == "PONG" || token == "WHO")
@@ -217,6 +217,29 @@ void Server::newClient()
 		}
 	}
 }
+void Server::closeClient(int i)
+{
+	int clientSocket = _client[i].getClientSocket();
+	if (clientSocket != -1)
+		close(clientSocket);
+	_client[i].setNickname("");
+	_client[i].setUser("");
+	_buff[i] = "";
+	_fds[i].revents = 0;
+	_fds[i].fd = -1;
+	_client[i].setClientSocket(-1);
+	for (int j = 0; j < MAX_CHANNEL; j++)
+		_channel[j].removeClient(_client[i]);
+}
+
+void Server::closeAll()
+{
+	for (int i = 0; i < MAX_CHANNEL; i++)
+		_channel[i].clear();
+	for (int i = 1; i < MAX_CLIENT; i++)
+		closeClient(i);
+	close(_serverSocket);
+}
 
 int Server::acceptClient()
 {
@@ -238,14 +261,7 @@ int Server::acceptClient()
 			std::cout << "msg : " << msg << std::endl;
 			if (msg <= 0)
 			{
-				int clientSocket = _client[i].getClientSocket();
-				close(clientSocket);
-				_client[i].setNickname("");
-				_client[i].setUser("");
-				_buff[i] = "";
-				_fds[i].revents = 0;
-				_fds[i].fd = -1;
-				_client[i].setClientSocket(-1);
+				closeClient(i);
 				return (1);
 			}
 			BUFF[msg] = '\0';

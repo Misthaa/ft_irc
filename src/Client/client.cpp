@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:24 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/17 17:19:12 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:27:59 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 Client::Client()
 {
-    _clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    _clientSocket = -1;
+    _correctPassword = false;
 }
 
 Client::~Client()
 {
-    close(_clientSocket);
+    if (_clientSocket != -1)
+        close(_clientSocket);
 }
 
 void Client::closeClient()
@@ -27,10 +29,15 @@ void Client::closeClient()
     if (_clientSocket != -1)
         close(_clientSocket);
     _clientSocket = -1;
+    _nickname = "";
+    _user = "";
+    _correctPassword = false;
 }
 
 void Client::start(char **av)
 {
+    _clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+
     struct sockaddr_in clientAddr;
 
     clientAddr.sin_family = AF_INET;

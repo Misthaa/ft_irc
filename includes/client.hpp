@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:39 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 17:15:28 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:07:49 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ class Client
         ~Client();
         void start(char **av);
         void closeClient();
-
         
         const std::string &getNickname() const{ return _nickname; }
         const std::string &getUser() const { return _user; }

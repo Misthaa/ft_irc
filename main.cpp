@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 17:55:46 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/13 18:56:39 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:46:06 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void closeServer(Server *server)
         serv = server;
         return ;
     }
+    serv->closeAll();
+    delete serv;
     exit(0);
 }
 
@@ -33,8 +35,13 @@ void sigintHandler(int sig)
 
 int main(int ac, char **av)
 {
-    Server server;
+    Server *server = new Server();
 
+    if (!server)
+    {
+        std::cerr << "Error: can't create server" << std::endl;
+        return 1;
+    }
     if (ac != 3 && av[0])
     {
         std::cerr << "Usage: " << av[0] << " <port> <password>" << std::endl;
@@ -43,15 +50,16 @@ int main(int ac, char **av)
 
     try
     {
-        server.start(av);
+        server->start(av);
     }
     catch (std::exception &e)
     {
         std::cerr << e.what() << std::endl;
+        delete server;
         return 1;
     }
     
-    closeServer(&server);
+    closeServer(server);
     
     if (signal(SIGINT, sigintHandler) == SIG_ERR)
 	{
@@ -61,7 +69,7 @@ int main(int ac, char **av)
     
     while (true)
     {
-        server.acceptClient();
+        server->acceptClient();
     }
     
     return 0;

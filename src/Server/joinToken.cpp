@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/22 16:04:39 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void Server::joinToken(std::string content, int i)
 	
 	nbWord = countWord(content);
 	std::string args = content.substr(content.find(" ") + 1);
-	std::cout << "args: " << args << std::endl;
 	content = content.substr(0, content.find(" "));
 	if (nbWord < 1)
 	{

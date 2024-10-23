@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
+#    By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/23 17:40:54 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/23 19:53:47 by roguigna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ OBJS_BONUS	=	$(addprefix $(OBJ_DIR_BONUS)/, $(SRCS_BONUS:.cpp=.o))
 
 # Compilateur et options
 CXX         =    c++
-CXXFLAGS    =    -std=c++98 -Wall  -Wextra -Iincludes -Werror
+CXXFLAGS    =    -std=c++98 -Wall  -Wextra -Iincludes -Werror -g3
 
 # Couleurs
 GREEN       =    \033[0;32m

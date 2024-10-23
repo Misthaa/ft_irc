@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 13:49:41 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:00:13 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class Server
         int acceptClient();
         void setPassword(std::string password);
         void setPort(char *port);
+        void closeAll();
     private:
         int _serverSocket;
         pollfd _fds[MAX_CLIENT + 1];
@@ -57,6 +58,7 @@ class Server
         int _port;
         void readData(std::string *BUFF, int i);
         void newClient();
+        void closeClient(int i);
         
         void nickToken(std::string content, int i);
         void userToken(std::string content, int i);
@@ -69,7 +71,7 @@ class Server
         void topicToken(std::string content, int i);
         void kickToken(std::string content, int i);
         void passToken(std::string content, int i);
-        void quitToken(std::string content, int i);
+        void quitToken(int i);
         void partToken(std::string content, int i);
         void modeToken(std::string content, int i);
         int  execMode(std::string mode, std::string infos, int channelIndex, int clientIndex);
