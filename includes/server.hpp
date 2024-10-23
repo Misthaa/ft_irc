@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 17:20:58 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:49:41 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 # define MAX_CLIENT  100
 # define MAX_CHANNEL 100
-
+# define SIZE_MSG    1024
 
 class Server
 {
@@ -51,12 +51,11 @@ class Server
         Client _client[MAX_CLIENT];
         Channel _channel[MAX_CHANNEL];
         
-        char   BUFF[MAX_CLIENT][1024];
+        std::string _buff[MAX_CLIENT];
         std::string _password;
         std::string  _sPort;
         int _port;
-        // void readData(std::string token, std::string content, int i);
-        void readData(char *BUFF, int i);
+        void readData(std::string *BUFF, int i);
         void newClient();
         
         void nickToken(std::string content, int i);

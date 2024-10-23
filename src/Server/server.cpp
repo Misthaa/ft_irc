@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 21:47:15 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:24:23 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void Server::start(char **av)
 		_client[i].setNickname("");
 		_client[i].setUser("");
 		_client[i].setClientSocket(-1);
+		_buff[i] = "";
 	}
 	setPort(av[1]);
 	setPassword(av[2]);
@@ -120,7 +121,7 @@ bool Server::checkIsClient(int i)
 	
 }
 
-void Server::readData(char *BUFF, int i)
+void Server::readData(std::string *BUFF, int i)
 {
 	std::string buff;
 	std::string line;
@@ -128,10 +129,13 @@ void Server::readData(char *BUFF, int i)
 	std::string content;
 	int 	indexContent;
 	
-	buff = normalizeSpaces(BUFF);
+	buff = normalizeSpaces(*BUFF);
 	
 	std::cout << "3'----------------\n" << buff << "\n----------------5'" << std::endl;
-
+	if (buff.find("\n") == std::string::npos)
+		return ;
+	else
+		*BUFF = "";
 	while (buff[0])
 	{
 		if (buff.find("\n") == std::string::npos)
@@ -216,6 +220,7 @@ void Server::newClient()
 
 int Server::acceptClient()
 {
+	char BUFF[SIZE_MSG];
 	_fds[0].revents = 0;
 	_fds[0].events = POLLIN;
 	_fds[0].fd = _serverSocket;
@@ -229,28 +234,28 @@ int Server::acceptClient()
 	{
 		if (_fds[i].revents & POLLIN)
 		{
-			int msg = recv(_fds[i].fd, BUFF[i], 1024, 0);
+			int msg = recv(_fds[i].fd, BUFF, SIZE_MSG - 1, 0);
+			std::cout << "msg : " << msg << std::endl;
 			if (msg <= 0)
 			{
 				int clientSocket = _client[i].getClientSocket();
 				close(clientSocket);
 				_client[i].setNickname("");
 				_client[i].setUser("");
+				_buff[i] = "";
 				_fds[i].revents = 0;
 				_fds[i].fd = -1;
 				_client[i].setClientSocket(-1);
 				return (1);
 			}
-			BUFF[i][msg - 1] = '\0';
-			std::string token = BUFF[i];
-			std::string content = BUFF[i];
+			BUFF[msg] = '\0';
+			_buff[i] += BUFF;
 			if (_client[i].getNickname() == "")
-				std::cout << "CLIENT " << i << " : " << BUFF[i] << std::endl;
+				std::cout << "CLIENT " << i << " : " << _buff[i] << std::endl;
 			else
-				std::cout << _client[i].getNickname() << " : " << BUFF[i] << std::endl;
-			token = token.substr(0, token.find(" "));
-			content = content.substr(content.find(" ") + 1);
-			readData(BUFF[i], i);
+				std::cout << _client[i].getNickname() << " : " << _buff[i] << std::endl;
+			readData(&_buff[i], i);
+			BUFF[0] = '\0';
 		}
 		i++;
 	}
