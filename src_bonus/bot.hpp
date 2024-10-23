@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   botVinted.hpp                                      :+:      :+:    :+:   */
+/*   bot.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BOTVINTED_HPP
-# define BOTVINTED_HPP
+#ifndef BOT_HPP
+# define BOT_HPP
 
 # include <iostream>
 # include <string>
 # include <sys/socket.h>
 # include <poll.h>
-
-
+# include <unistd.h>
+# include <sstream>
+#include <map>  
 # include "client.hpp"
 
-class botVinted
+class bot
 {
     public:
-        botVinted(std::string nickname, std::string port, std::string password);
-        ~botVinted();
+        bot(std::string nickname, std::string port, std::string password);
+        ~bot();
         
         void run();
         void readDataBot();
-
+        void priceIsRight(std::string content, std::string player);
+        bool isNewPlayer(std::string player);
+        void addPlayer(std::string player);
     private:
         int _clientSocket;
         std::string _nickname;
         std::string _port;
         std::string _password;
         pollfd _fds;
+        std::map<std::string, int> _playerMap;
 };
 
 #endif

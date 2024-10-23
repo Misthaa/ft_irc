@@ -6,7 +6,7 @@
 #    By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/20 15:41:20 by madegryc          #+#    #+#              #
-#    Updated: 2024/10/22 19:30:35 by madegryc         ###   ########.fr        #
+#    Updated: 2024/10/23 17:40:54 by madegryc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,12 @@ SRCS        =	main.cpp\
 				src/utils.cpp\
 
 SRCS_BONUS	=	src_bonus/main.cpp\
-				src_bonus/botVinted.cpp\
+				src_bonus/bot.cpp\
 
 # Nom de l'exécutable
 NAME        =    ircserv
 
-NAME_BONUS	=	botVinted
+NAME_BONUS	=	bot
 
 # Répertoire pour les fichiers objets
 OBJ_DIR     =    obj
@@ -65,7 +65,7 @@ $(NAME) : $(OBJS)
 
 bonus : $(NAME_BONUS) 
 	@$(CXX) $(CXXFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS)
-	@echo "$(GREEN)Compilation de botVinted...$(NC)"
+	@echo "$(GREEN)Compilation de bot...$(NC)"
 
 $(NAME_BONUS) : $(OBJS_BONUS)
 	@$(CXX) $(CXXFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS)
@@ -96,6 +96,7 @@ clean :
 # Nettoyage complet (objets et exécutable)
 fclean : clean
 	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
 
 # Recompiler tout
 re    : fclean all
