@@ -106,7 +106,7 @@ void bot::priceIsRight(std::string content, std::string player)
     int price = ft_stoiprice(content);
     if (price == -1)
     {
-        std::string msg = "PRIVMSG " + player + " PRICE CAN ONLY BE A NUMBER";
+        std::string msg = "PRIVMSG " + player + " PRICE CAN ONLY BE A POSITIVE NUMBER";
         response(_clientSocket, msg);
         return;
     }
@@ -157,6 +157,7 @@ void bot::readDataBot()
                 return;
             }
             buff[ret] = '\0';
+            std::cout << buff << std::endl;
             std::string content = buff;
             std::string player = content.substr(0, content.find(" "));
             content = nextArg(content);
@@ -167,7 +168,7 @@ void bot::readDataBot()
             player = player.substr(1);
             if (content[0] == ':')
                 content = content.substr(1);
-            if (tokenBot == "PLAY" && isNewPlayer(player) == true)
+            if ((tokenBot == "PLAY" || tokenBot == ":PLAY") && isNewPlayer(player) == true)
                 addPlayer(player);
             else if (isNewPlayer(player) == false)
             {
