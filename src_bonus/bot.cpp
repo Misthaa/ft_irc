@@ -47,43 +47,33 @@ void response(int _clientSocket, std::string msg)
     send(_clientSocket, msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 }
 
-// void bot::priceIsRight(std::string content, std::string player)
-// {
-//     std::string allPlayer[100];
-//     std::string clothing[10] = {"T-shirt", "Pants", "Shoes", "Hat", "Gloves", "Socks", "Underwear", "Jacket", "Scarf", "Belt"};
-//     std::string brend[10] = {"Arte", "Nike", "Puma", "Reebok", "Vans", "Supraw", "New Balance", "Carhartt", "Champion", "Asics"};
+static int	ft_stoiprice(std::string &str)
+{
+	int res = 0;
+	int i = 0;
+    std::string intMax = "2147483647";
 
-//     bool firstTime = true;
-//     player = player.substr(1);
-//     std::string token = content.substr(0, content.find(" "));
-//     content = content.substr(content.find(" ") + 1);
-//     int price = 0;
-//     if (firstTime == true)
-//     {
-//         firstTime = false;
-//         int random = rand() % 10;
-//         std::string msg = "PRIVMSG " + player + " PRICERIGHT " + clothing[random] + " " + brend[random];
-//         response(_clientSocket, msg);
-//         price = rand() % 1000;
-//         std::cout << "PRICE : " << price << std::endl;
-//     }
-//     else
-//     {
-//         if (content == ft_to_string(price))
-//         {
-//             firstTime = true;
-//             std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "YES";
-//             response(_clientSocket, msg);
-
-//         }
-//         else
-//         {
-//             std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "NO";
-//             response(_clientSocket, msg);
-
-//         }
-//     }
-// }
+    for (int i = 0; str[i]; i++)
+    {
+        if (std::isdigit(str[i]) == 0)
+                return -1;
+    }
+    if (str.size() == intMax.size())
+    {
+        for (int i = 0; str[i]; i++)
+        {
+            if (str[i] > intMax[i])
+                return -2;
+        }
+    }
+	while (str[i])
+	{
+        
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	return (res);
+}
 
 bool bot::isNewPlayer(std::string player)
 {
@@ -110,26 +100,37 @@ void bot::addPlayer(std::string player)
 
 void bot::priceIsRight(std::string content, std::string player)
 {
-    if (isNewPlayer(player) == false)
-    {
-        addPlayer(player);
-        return ;
-    }
-
-    player = player.substr(1);
     std::string token = content.substr(0, content.find(" "));
     content = content.substr(content.find(" ") + 1);
-    if (content == ft_to_string(price))
+    content = content.substr(0, content.find("\n") - 1);
+    int price = ft_stoiprice(content);
+    if (price == -1)
+    {
+        std::string msg = "PRIVMSG " + player + " PRICE CAN ONLY BE A NUMBER";
+        response(_clientSocket, msg);
+        return;
+    }
+    if (price > 1000 || price < 0)
+    {
+        std::string msg = "PRIVMSG " + player + " PRICE CAN ONLY BE BETWEEN 0 AND 1000";
+        response(_clientSocket, msg);
+        return;
+    }
+    if (_playerMap[player] == price)
     {
         std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "YES";
         response(_clientSocket, msg);
-
+        _playerMap.erase(player);
+    }
+    else if (_playerMap[player] < price)
+    {
+        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "LOWER";
+        response(_clientSocket, msg);
     }
     else
     {
-        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "NO";
+        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "HIGHER";
         response(_clientSocket, msg);
-
     }
 }
 
@@ -155,21 +156,20 @@ void bot::readDataBot()
                 close(_clientSocket);
                 return;
             }
-            buff[ret - 1] = '\0';
+            buff[ret] = '\0';
             std::string content = buff;
             std::string player = content.substr(0, content.find(" "));
             content = nextArg(content);
             std::string token = content.substr(0, content.find(" "));
             content = nextArg(content);
             content = nextArg(content);
-            std::string tokenBot = content.substr(0, content.find("\n"));
-            std::cout << "TOKEN BOT ICIII : " << "'" << tokenBot << "'" << std::endl;
-            if (tokenBot == "PLAY")
-            {
-                std::cout << "YOU WANT TO PLAY LETS PLAY" << std::endl;
-                addPlayer(content, player);
-            }
-            else (isNewPlayer(player) == false)
+            std::string tokenBot = content.substr(0, content.find("\n") - 1);
+            player = player.substr(1);
+            if (content[0] == ':')
+                content = content.substr(1);
+            if (tokenBot == "PLAY" && isNewPlayer(player) == true)
+                addPlayer(player);
+            else if (isNewPlayer(player) == false)
             {
                 priceIsRight(content, player);
             }

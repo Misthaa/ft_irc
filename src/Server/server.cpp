@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 19:16:09 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:09:28 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void Server::closeClient(int i)
 	_buff[i] = "";
 	_fds[i].revents = 0;
 	_fds[i].fd = -1;
+	_client[i].setCorrectPassword(false);
 	_client[i].setClientSocket(-1);
 	for (int j = 0; j < MAX_CHANNEL; j++)
 		_channel[j].removeClient(_client[i]);

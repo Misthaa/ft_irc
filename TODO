@@ -1,3 +1,1 @@
-valgrind : nv channel : ctrl+C
-mode quand pas assez argument : * /mode +okl roguigna coucou
-                                * -k wrong pass
+bot peux pas recevoir de mp pour play sur hexchat sans /PRIVMSG bitx PLAY
