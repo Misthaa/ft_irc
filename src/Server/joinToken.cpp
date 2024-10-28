@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/23 19:20:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:12:54 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,20 @@ void Server::joinToken(std::string content, int i)
 			{
 				if (_channel[channelIndex].getChannelPassword() != "" && _channel[channelIndex].getChannelPassword() != args.substr(0, args.find(" ") ))
 				{
-					sendError(_client[i], "475", "* JOIN :Wrong password");
+					msg = _channel[channelIndex].getChannelName() + " JOIN :Wrong password";
+					sendError(_client[i], "475", msg);
 					return;
 				}
 				if (_channel[channelIndex].getChannelOnInvite() == 1 && _channel[channelIndex].isInvited(_client[i].getNickname()) == false)
 				{
-					sendError(_client[i], "473", "* JOIN :You're not invited on this channel");
+					msg = _channel[channelIndex].getChannelName() + " JOIN :You're not invited on this channel";
+					sendError(_client[i], "473", msg);
 					return;
 				}
 				if ((int)_channel[channelIndex].getChannelClient().size() >= _channel[channelIndex].getUserLimit())
 				{
-					sendError(_client[i], "471", "* JOIN :Channel is full");
+					msg = _channel[channelIndex].getChannelName() + " JOIN :Channel is full";
+					sendError(_client[i], "471", msg);
 					return;
 				}
 			}
@@ -79,7 +82,7 @@ void Server::joinToken(std::string content, int i)
 				_channel[channelIndex].start(content, "", _client[i]);
 				msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost JOIN :" + content + "\n";
 				_channel[channelIndex].sendToAll(msg);
-				msg = ":localhsot MODE " + content + " +o " + _client[i].getNickname() + "\n";
+				msg = ":localhost MODE " + content + " +o " + _client[i].getNickname() + "\n";
 				_channel[channelIndex].sendToAll(msg);
 				break;
 			}

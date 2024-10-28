@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 16:03:21 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:21:57 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void Server::kickToken(std::string content, int i)
 	std::string nickname;
 	std::string channelName;
 	std::string reason;
+	std::string msg;
 
 	nickname = content.substr(content.find(" ") + 1, content.find(" ", content.find(" ") + 1) - content.find(" ") - 1);
 	channelName = content.substr(0, content.find(" "));
@@ -31,12 +32,13 @@ void Server::kickToken(std::string content, int i)
 				{
 					if (_channel[k].isClientInChannel(_client[j]) == 0)
 					{
-						sendError(_client[i], "403", "* KICK :You're not on this channel");
+						sendError(_client[i], "442", "* KICK :You're not on this channel");
 						return ;
 					}
 					if (_channel[k].isOperator(_client[i]) == 0)
 					{
-						sendError(_client[i], "403", "* KICK :You're not operator of this channel");
+						msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[k].getChannelName() + " * KICK :You must be operator to kick someone in the channel\n";
+						servSend(_fds[i].fd, msg);
 						return ;
 					}
 					std::string msg = ":localhost KICK " + _channel[k].getChannelName() + " " + nickname + " " + reason + "\n";
@@ -45,7 +47,7 @@ void Server::kickToken(std::string content, int i)
 					return ;
 				}
 			}
-			sendError(_client[i], "403", "* KICK :No such channel");
+			sendError(_client[i], "401", "* KICK :No such channel");
 			return ;
 		}
 	}

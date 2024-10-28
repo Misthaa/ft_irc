@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/23 15:02:10 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:27:24 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ void Channel::addInviteList(std::string channelInviteList)
 	for (int i = 0; i < 100; i++)
 	{
 		if (_channelInviteList[i] == "")
+		{
 			_channelInviteList[i] = channelInviteList;
-		break;
+			break;
+		}
 	}
 }
 

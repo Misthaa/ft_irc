@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/21 19:52:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:46:33 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void Server::topicToken(std::string content, int i)
 {
     std::string channelName;
     std::string topic;
+    std::string msg;
 
     channelName = content.substr(0, content.find(" "));
     topic = content.substr(content.find(" ") + 1);
@@ -25,7 +26,8 @@ void Server::topicToken(std::string content, int i)
         {
             if (_channel[j].isOperator(_client[i]) == 0 && _channel[j].getChangeTopic() == true)
             {
-                sendError(_client[i], "482", "* TOPIC :You must be operator to change the topic of this channel");
+				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * TOPIC :You must be operator to change the topic of this channel\n";
+                servSend(_fds[i].fd, msg);
                 return ;
             }
             _channel[j].setChannelTopic(topic);

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:22:02 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 17:12:26 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:01:23 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ std::string Server::positiveMode(char mode, std::string infos, int channelIndex,
 	{
 		_channel[channelIndex].setChannelPassword(currArg);
 		infos = nextArg(infos);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " +k " + currArg + "\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " +k " + currArg + "\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else if (mode == 'l')
 	{
+		if (currArg.find_first_not_of("0123456789") != std::string::npos)
+			return infos;
 		_channel[channelIndex].setUserLimit(ft_stoi(currArg));
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " +l " + currArg + "\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " +l " + currArg + "\n";
 		_channel[channelIndex].sendToAll(msg);
 		infos = nextArg(infos);
 
@@ -68,7 +70,7 @@ std::string Server::positiveMode(char mode, std::string infos, int channelIndex,
 		{
 			if (_channel[channelIndex].isClientInChannel(_client[clientIndex]) == 1)
 			{
-				std::string msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " +o " + currArg + "\n";
+				std::string msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " +o " + currArg + "\n";
 				_channel[channelIndex].setOperator(_client[clientTarget], true);
 				_channel[channelIndex].sendToAll(msg);
 				return infos;
@@ -84,13 +86,13 @@ std::string Server::positiveMode(char mode, std::string infos, int channelIndex,
 	else if (mode == 't')
 	{
 		_channel[channelIndex].setChangeTopic(true);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " +t\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " +t\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else if (mode == 'i')
 	{
 		_channel[channelIndex].setChannelOnInvite(true);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " +i\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " +i\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else
@@ -116,13 +118,13 @@ std::string Server::negativeMode(char mode, std::string infos, int channelIndex,
 		if (_channel[channelIndex].getChannelPassword() == "")
 			return infos;
 		_channel[channelIndex].setChannelPassword("");
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " -k " + currArg + "\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " -k " + currArg + "\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else if (mode == 'l')
 	{
 		_channel[channelIndex].setUserLimit(MAX_CLIENT);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " -l " + currArg + "\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " -l " + currArg + "\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else if (mode == 'o')
@@ -133,7 +135,7 @@ std::string Server::negativeMode(char mode, std::string infos, int channelIndex,
 		{
 			if ( _channel[channelIndex].isClientInChannel(_client[clientIndex]) == 1)
 			{
-				std::string msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " -o " + currArg + "\n";
+				std::string msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " -o " + currArg + "\n";
 				_channel[channelIndex].setOperator(_client[clientTarget], false);
 				_channel[channelIndex].sendToAll(msg);
 				return infos;
@@ -149,13 +151,13 @@ std::string Server::negativeMode(char mode, std::string infos, int channelIndex,
 	else if (mode == 't')
 	{
 		_channel[channelIndex].setChangeTopic(false);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " -t\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " -t\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else if (mode == 'i')
 	{
 		_channel[channelIndex].setChannelOnInvite(false);
-		msg = ":localhost MODE " + _channel[channelIndex].getChannelName() + " -i\n";
+		msg = ":" + _client[clientIndex].getNickname() + "!" + _client[clientIndex].getUser() + "@localhost MODE " + _channel[channelIndex].getChannelName() + " -i\n";
 		_channel[channelIndex].sendToAll(msg);
 	}
 	else
@@ -188,7 +190,8 @@ void Server::modeToken(std::string content, int i)
 	std::string channelName;
 	std::string mode;
 	std::string infos;
-
+	std::string msg;
+	
 	if (countWord(content) < 2)
 		return;
 	channelName = content.substr(0, content.find(" "));
@@ -200,9 +203,16 @@ void Server::modeToken(std::string content, int i)
 	{
 		if (channelName == _channel[j].getChannelName())
 		{
+			if (_channel[j].isClientInChannel(_client[i]) == 0)
+			{
+				msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel\n";
+				servSend(_fds[i].fd, msg);
+				return ;
+			}
 			if (_channel[j].isOperator(_client[i]) == 0)
 			{
-				sendError(_client[i], "482", "* MODE :You're not operator of this channel");
+				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * MODE :You're not operator of this channel to change the mode\n";
+				servSend(_fds[i].fd, msg);
 				return ;
 			}
 			else if (execMode(mode, infos, j, i) == 0)

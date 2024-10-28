@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:07:32 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 17:40:06 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/28 22:05:24 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bot.hpp"
+
+void closeBot(Bot *bot)
+{
+    static Bot *savedBot = NULL;
+
+    if (savedBot == NULL)
+    {
+        savedBot = bot;
+        return ;
+    }
+    delete savedBot;
+    exit(0);
+}
+
+void sigintHandler(int sig)
+{
+    (void)sig;
+    std::cout << "Caught signal " << std::endl;
+    closeBot(NULL);
+}
 
 int main(int ac, char **av)
 {
@@ -19,9 +39,20 @@ int main(int ac, char **av)
         std::cerr << "Usage: ./bot [nickname] [port] [password]" << std::endl;
         return 1;
     }
-    bot bot(av[1], av[2], av[3]);
+    Bot *bot = new Bot(av[1], av[2], av[3]);
+    if (!bot)
+    {
+        std::cerr << "Error: can't create bot" << std::endl;
+        return 1;
+    }
+    closeBot(bot);
+    if (signal(SIGINT, sigintHandler) == SIG_ERR)
+	{
+		std::cerr << "Error: can't catch SIGINT" << std::endl;
+		return (1);
+	}
     try {
-        bot.run();
+        bot->run();
     }
     catch (std::exception &e)
     {

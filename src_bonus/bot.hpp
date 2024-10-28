@@ -19,14 +19,16 @@
 # include <poll.h>
 # include <unistd.h>
 # include <sstream>
-#include <map>  
+# include <map>
+# include <ctime>  
 # include "client.hpp"
+# include <signal.h>
 
-class bot
+class Bot
 {
     public:
-        bot(std::string nickname, std::string port, std::string password);
-        ~bot();
+        Bot(std::string nickname, std::string port, std::string password);
+        ~Bot();
         
         void run();
         void readDataBot();
@@ -36,6 +38,7 @@ class bot
     private:
         int _clientSocket;
         std::string _nickname;
+        std::string _msg;
         std::string _port;
         std::string _password;
         pollfd _fds;

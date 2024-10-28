@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:20:24 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 19:27:59 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:53:23 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Client::~Client()
 void Client::closeClient()
 {
     if (_clientSocket != -1)
-        close(_clientSocket);
+         close(_clientSocket);
     _clientSocket = -1;
     _nickname = "";
     _user = "";

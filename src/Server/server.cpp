@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 20:09:28 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:04:33 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ void Server::start(char **av)
 		close(_serverSocket);
 		throw std::runtime_error("Listen failed");
 	}
-	fcntl(_serverSocket, F_SETFL, O_NONBLOCK);
+	if (fcntl(_serverSocket, F_SETFL, O_NONBLOCK) < 0)
+	{
+		close(_serverSocket);
+		throw std::runtime_error("Fcntl failed");
+	}
 	for (int i = 0; i < MAX_CLIENT; i++)
 	{
 		_fds[i].fd = -1;
@@ -102,6 +106,9 @@ int Server::isClientExist(std::string nickname)
 
 bool Server::checkIsClient(int i)
 {
+	std::cout << "Nickname: " << _client[i].getNickname() << std::endl;
+	std::cout << "User: " << _client[i].getUser() << std::endl;
+	std::cout << "Password: " << _client[i].getCorrectPassword() << std::endl;
 	if (_client[i].getNickname() == "")
 	{
 		sendError(_client[i], "451", "* :You have not registered");
@@ -210,6 +217,7 @@ void Server::newClient()
 	{
 		if (_fds[i].fd == -1)
 		{
+			std::cout << "Client " << i << " is here! socket : " << client << std::endl;
 			_fds[i].fd = client;
 			_fds[i].events = POLLIN;
 			_client[i].setClientSocket(client);

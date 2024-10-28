@@ -12,16 +12,19 @@
 
 #include "bot.hpp"
 
-bot::bot(std::string nickname, std::string port, std::string password)
+Bot::Bot(std::string nickname, std::string port, std::string password)
 {
     _nickname = nickname;
     _port = port;
     _password = password;
 }
 
-bot::~bot()
+Bot::~Bot()
 {
-    close(_clientSocket);
+    if (_clientSocket != -1)
+        close(_clientSocket);
+    if (_playerMap.size() > 0)
+        _playerMap.clear();
 }
 
 static std::string nextArg(std::string infos)
@@ -75,7 +78,7 @@ static int	ft_stoiprice(std::string &str)
 	return (res);
 }
 
-bool bot::isNewPlayer(std::string player)
+bool Bot::isNewPlayer(std::string player)
 {
     for (std::map<std::string, int>::iterator it = _playerMap.begin(); it != _playerMap.end(); it++)
 	{
@@ -85,20 +88,24 @@ bool bot::isNewPlayer(std::string player)
     return true;
 }
 
-void bot::addPlayer(std::string player)
+void Bot::addPlayer(std::string player)
 {
-    std::string clothing[10] = {"T-shirt", "Pants", "Shoes", "Hat", "Gloves", "Socks", "Underwear", "Jacket", "Scarf", "Belt"};
+    std::string clothing[10] = {"T-shirt 👕", "Pants 👖", "Shoes 👞", "Hat 🧢", "Gloves 🧤", "Socks 🧦", "Underwear 🩲", "Jacket 🧥", "Scarf 🧣", "Jewels 💍"};
     std::string brend[10] = {"Arte", "Nike", "Puma", "Reebok", "Vans", "Supraw", "New Balance", "Carhartt", "Champion", "Asics"};
 
-    int random = rand() % 10;
-    std::string msg = "PRIVMSG " + player + " PRICERIGHT " + clothing[random] + " " + brend[random];
+    srand(time(NULL) + 200);
+    int r_cloting = rand() % 10;
+    srand(time(NULL));
+    int r_brend = rand() % 10;
+    std::string msg = "PRIVMSG " + player + " FIND THE PRICERIGHT OF " + brend[r_brend] + " " + clothing[r_cloting];
     response(_clientSocket, msg);
+    srand(time(NULL));
     int price = rand() % 1000;
     std::cout << "PRICE : " << price << std::endl;
     _playerMap[player] = price;
 }
 
-void bot::priceIsRight(std::string content, std::string player)
+void Bot::priceIsRight(std::string content, std::string player)
 {
     std::string token = content.substr(0, content.find(" "));
     content = content.substr(content.find(" ") + 1);
@@ -118,35 +125,44 @@ void bot::priceIsRight(std::string content, std::string player)
     }
     if (_playerMap[player] == price)
     {
-        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "YES";
+        std::string msg = "PRIVMSG " + player + " 🎉 CONGRULATIONS YOU FOUND THE RIGHT PRICE ! 🎉 \n";
+        msg+= "PRIVMSG " + player + " (TYPE PLAY TO PLAY AGAIN.) 💸";
         response(_clientSocket, msg);
         _playerMap.erase(player);
     }
     else if (_playerMap[player] < price)
     {
-        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "LOWER";
+        std::string msg = "PRIVMSG " + player + " PRICERIGHT IS LOWER 📉";
         response(_clientSocket, msg);
     }
     else
     {
-        std::string msg = "PRIVMSG " + player + " PRICERIGHT " + "HIGHER";
+        std::string msg = "PRIVMSG " + player + " PRICERIGHT IS HIGHER 📈";
         response(_clientSocket, msg);
     }
 }
 
-void bot::readDataBot()
+void Bot::readDataBot()
 {
     int ret;
     _fds.events = POLLIN;
     _fds.revents = 0;
     _fds.fd = _clientSocket;
-    std::string msg = "PASS " + _password + "\n";
-    msg += "USER bot 0 * : bot\n";
-    msg += "NICK " + _nickname + "\n";
-    send(_clientSocket, msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
+
+    _msg = "PASS " + _password + "\n";
+    _msg += "USER bot 0 * : bot\n";
+    _msg += "NICK " + _nickname + "\n";
+    send(_clientSocket, _msg.c_str(), _msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
     while (1)
     {
         ret = poll(&_fds, 1, 100);
+        if (ret < 0)
+        {
+            std::cerr << "Error: poll failed" << std::endl;
+            return;
+        }
+        else if (ret == 0)
+            continue;
         if (_fds.revents & POLLIN)
         {
             char buff[1024];
@@ -171,16 +187,19 @@ void bot::readDataBot()
             if ((tokenBot == "PLAY" || tokenBot == ":PLAY") && isNewPlayer(player) == true)
                 addPlayer(player);
             else if (isNewPlayer(player) == false)
-            {
                 priceIsRight(content, player);
+            else if (token != "401" && token != "001" && token != "421" && token != "password")
+            {
+                _msg = "PRIVMSG " + player + " Please use the command PLAY to start the game\n";
+                response(_clientSocket, _msg);
             }
         }
     }
 }
 
-void bot::run()
+void Bot::run()
 {
-    std::cout << "bot is running" << std::endl;
+    // std::cout << "bot is running" << std::endl;
     _clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (_clientSocket == -1)
     {

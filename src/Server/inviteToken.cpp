@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 10:50:08 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:27:28 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void Server::inviteToken(std::string content, int i)
 {
     std::string nickname;
     std::string channelName;
+    std::string msg;
 
     nickname = content.substr(0, content.find(" "));
     channelName = content.substr(content.find(" ") + 1);
@@ -27,14 +28,21 @@ void Server::inviteToken(std::string content, int i)
             {
                 if (_channel[k].getChannelName() == channelName)
                 {
+                    if (_channel[k].isClientInChannel(_client[i]) == false)
+                    {
+                        msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel\n";
+                        servSend(_fds[i].fd, msg);
+                        return ;
+                    }
                     std::map<Client&, bool>::iterator it = _channel[k].getChannelClient().find(_client[j]);
                     if (it != _channel[k].getChannelClient().end())
                     {
-                        sendError(_client[i], "403", "* INVITE :You're already on this channel");
+                        msg = ":localhost 443 " + nickname + " " + channelName + " :is already on channel\n";
+                        servSend(_fds[i].fd, msg);
                         return ;
                     }
                     _channel[k].addInviteList(nickname);
-                    std::string msg = ":" + _client[i].getNickname() + " INVITE " + nickname + " " +  + " " + channelName + "\n";
+                    msg = ":" + _client[i].getNickname() + " INVITE " + nickname + " " +  + " " + channelName + "\n";
                     servSend(_fds[j].fd, msg);
                     servSend(_fds[i].fd, msg);
                     return ;

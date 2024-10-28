@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 18:02:44 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:33:03 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void Server::nickToken(std::string content, int i)
 
     nbWord = countWord(content);
     content = content.substr(0, content.find(" "));
-    std::cout << "nbWord: " << nbWord << std::endl;
     if (nbWord < 1)
     {
         sendError(_client[i], "461", "* NICK :Not enough parameters");
