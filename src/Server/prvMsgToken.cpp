@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:28:33 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 20:41:29 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:02:21 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void Server::channelMessage(std::string content, int i)
                     _channel[j].sendChannelMsg(message, _client[i].getNickname());
                     return ;
             }
-            sendError(_client[i], "403", "* PRIVMSG :You're not on this channel");
+            sendError(_client[i], "403", "IRCserv: PRIVMSG :You're not on this channel");
             return ;
         }   
     }
-    sendError(_client[i], "403", "* PRIVMSG :No such channel");
+    sendError(_client[i], "403", "IRCserv: PRIVMSG :No such channel");
     return ;
 }
 
@@ -52,7 +52,7 @@ void Server::prvMessage(std::string content, int i)
             return ;
         }
     }
-    sendError(_client[i], "401", "* PRIVMSG :No such nickname");
+    sendError(_client[i], "401", "IRCserv: PRIVMSG :No such nickname");
 }
 
 void Server::prvMessageToken(std::string content, int i)

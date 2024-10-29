@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:04:09 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:03:18 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ void Server::userToken(std::string content, int i)
     content = content.substr(0, content.find(" "));
     if (nbWord < 1)
     {
-        sendError(_client[i], "461", "* USER :Not enough parameters");
+        sendError(_client[i], "461", "IRCserv: USER :Not enough parameters");
         return;
     }
     if (_fds[i].fd == -1)
     {
-        sendError(_client[i], "461", "* USER :You have not registered");
+        sendError(_client[i], "461", "IRCserv: USER :You have not registered");
         return;
     }
     if (content.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]-{}\\^#") != 0)
     {
-        sendError(_client[i], "432", "* USER :Erroneous username");
+        sendError(_client[i], "432", "IRCserv: USER :Erroneous username");
         return;
     }
     for (int j = 1; j < MAX_CLIENT; j++)
