@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 20:42:20 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:58:24 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void Server::joinToken(std::string content, int i)
 	}
 	msg = ":localhost 353 " + _client[i].getNickname() + " = " + content + " :";
 	msg += _channel[channelIndex].listChannelClient();
-	std::cout << "msg frate : "<< msg << std::endl;
 	msg += ":localhost 366 " + _client[i].getNickname() + " " + _channel[channelIndex].getChannelName() + " :End of /NAMES list\n";
 	_channel[channelIndex].sendToAll(msg);
 	msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[channelIndex].getChannelName() + " " + _channel[channelIndex].getChannelTopic();

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:33:37 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:53:32 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void Server::readData(std::string *BUFF, int i)
 		else if (token == "USER")
 			userToken(content, i);
 		else if (token == "QUIT")
-			quitToken(content, i);
+			quitToken(i);
 		else if (token == "PASS")
 			passToken(content, i);
 		else if (token == "CAP" || token == "PING" || token == "PONG" || token == "WHO")

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:34:00 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:53:19 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ class Server
         void topicToken(std::string content, int i);
         void kickToken(std::string content, int i);
         void passToken(std::string content, int i);
-        void quitToken(std::string content, int i);
+        void quitToken(int i);
         void partToken(std::string content, int i);
         void modeToken(std::string content, int i);
         int  execMode(std::string mode, std::string infos, int channelIndex, int clientIndex);

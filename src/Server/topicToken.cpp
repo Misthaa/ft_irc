@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topicToken.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:47:58 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:58:39 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void Server::topicToken(std::string content, int i)
     std::string msg;
 
     channelName = content.substr(0, content.find(" "));
-    topic = content.substr(content.find(" ") + 1);
+    if (content.find(" ") == std::string::npos)
+        topic = "";
+    else
+        topic = content.substr(content.find(" ") + 1);
     for (int j = 0; j < MAX_CHANNEL; j++)
     {
         if (channelName == _channel[j].getChannelName())
@@ -29,16 +32,17 @@ void Server::topicToken(std::string content, int i)
                 sendError(_client[i], "403", "IRCserv: TOPIC :You're not on this channel");
                 return ;
             }
-            if (topic == "(no topic)")
+            if (topic == "" && _channel[j].getChannelTopic() == "(no topic)")
             {
                 msg = ":localhost 331 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :No topic is set\n";
                 servSend(_fds[i].fd, msg);
                 return ;
             }
-            else
+            else if (topic == "")
             {
-                msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :" + _channel[j].getChannelTopic() + "\n";
+                msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " " + _channel[j].getChannelTopic() + "\n";
                 servSend(_fds[i].fd, msg);
+                return ;
             }
             if (_channel[j].isOperator(_client[i]) == 0 && _channel[j].getChangeTopic() == true)
             {
