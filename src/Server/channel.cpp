@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 21:37:58 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:39:18 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void Channel::sendChannelMsg(std::string msg, std::string nickname)
 			it++;
 			continue;
 		}
-		sendMsg = ":" + nickname + "!" + "localhost" + " PRIVMSG " + _channelName + " :" + msg + "\n";
+		sendMsg = ":" + nickname + "!" + "localhost" + " PRIVMSG " + _channelName + " " + msg + "\n";
 		send(it->first.getClientSocket(), sendMsg.c_str(), sendMsg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 		it++;
 	}

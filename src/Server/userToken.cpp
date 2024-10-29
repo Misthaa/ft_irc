@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   userToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 15:14:07 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 21:02:55 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:39:25 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void Server::userToken(std::string content, int i)
         return ;
     }
     _client[i].setUser(content);
-    std::string msg = "user : " + _client[i].getUser();
+    std::string msg = "Correct User, " + _client[i].getUser();
     servSend(_fds[i].fd, msg);
     if (_client[i].getNickname() != "" && _client[i].getCorrectPassword() == true)
     {
