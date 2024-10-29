@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   joinToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 15:56:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:35:12 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void Server::joinToken(std::string content, int i)
 	}
 	msg += "\n";
 	msg += ":localhost 366 " + _client[i].getNickname() + " " + _channel[channelIndex].getChannelName() + " :End of /NAMES list\n";
-	msg += ":localhost 332 " + _client[i].getNickname() + " " + _channel[channelIndex].getChannelName() + " :" + _channel[channelIndex].getChannelTopic() + "\n";
 	_channel[channelIndex].sendToAll(msg);
+	msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[channelIndex].getChannelName() + " " + _channel[channelIndex].getChannelTopic() + "\n";
+	servSend(_fds[i].fd, msg);
 }

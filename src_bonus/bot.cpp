@@ -141,9 +141,11 @@ void Bot::priceIsRight(std::string content, std::string player)
     }
 }
 
+
 void Bot::readDataBot()
 {
     int ret;
+    int checkIndex = 0;
     _fds.events = POLLIN;
     _fds.revents = 0;
     _fds.fd = _clientSocket;
@@ -173,6 +175,13 @@ void Bot::readDataBot()
             }
             buff[ret] = '\0';
             std::string content = buff;
+            if (content.find("433") != std::string::npos || content.find("432") != std::string::npos || content.find("451") != std::string::npos \
+                || content.find("462") != std::string::npos || content.find("464") != std::string::npos)
+            {
+                content.erase(content.find("\n"));
+                std::cerr << content << std::endl;
+                return ;
+            }
             std::string player = content.substr(0, content.find(" "));
             content = nextArg(content);
             std::string token = content.substr(0, content.find(" "));
@@ -186,11 +195,12 @@ void Bot::readDataBot()
                 addPlayer(player);
             else if (isNewPlayer(player) == false)
                 priceIsRight(content, player);
-            else if (token != "401" && token != "001" && token != "421" && token != "password")
+            else if (token != "401" && token != "001" && token != "421" && token != "password" && token != "451")
             {
                 _msg = "PRIVMSG " + player + " Please use the command PLAY to start the game\n";
                 response(_clientSocket, _msg);
             }
+            checkIndex++;
         }
     }
 }

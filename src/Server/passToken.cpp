@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   passToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:30:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 15:01:53 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:00:04 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void Server::passToken(std::string content, int i)
     }
     if (content == _password)
     {
-        std::string msg = "Correct password " + _client[i].getNickname();
+        std::string msg = "Correct password" + _client[i].getNickname();
 		_client[i].setCorrectPassword(true);
         servSend(_fds[i].fd, msg);
 		if (_client[i].getNickname() != "" && _client[i].getUser() != "")
