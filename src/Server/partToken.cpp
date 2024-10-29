@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:21:54 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 14:58:21 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:01:21 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void Server::partToken(std::string content, int i)
         {
             if (_channel[j].isClientInChannel(_client[i]) == 0)
             {
-                sendError(_client[i], "403", "* PART :You're not on this channel");
+                sendError(_client[i], "403", "IRCserv: PART :You're not on this channel");
                 return ;
             }
             std::string msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost PART " + channelName + " :leaving\n";
@@ -34,6 +34,6 @@ void Server::partToken(std::string content, int i)
             return ;
         }
     }
-    sendError(_client[i], "403", "* PART :No such channel");
+    sendError(_client[i], "403", "IRCserv: PART :No such channel");
     return ;
 }

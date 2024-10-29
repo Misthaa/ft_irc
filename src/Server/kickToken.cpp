@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 17:21:57 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:59:50 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void Server::kickToken(std::string content, int i)
 				{
 					if (_channel[k].isClientInChannel(_client[j]) == 0)
 					{
-						sendError(_client[i], "442", "* KICK :You're not on this channel");
+						sendError(_client[i], "442", "IRCserv:  KICK :You're not on this channel");
 						return ;
 					}
 					if (_channel[k].isOperator(_client[i]) == 0)
@@ -47,10 +47,10 @@ void Server::kickToken(std::string content, int i)
 					return ;
 				}
 			}
-			sendError(_client[i], "401", "* KICK :No such channel");
+			sendError(_client[i], "401", "IRCserv:  KICK :No such channel");
 			return ;
 		}
 	}
-	sendError(_client[i], "403", "* KICK :No such nickname");
+	sendError(_client[i], "403", "IRCserv:  KICK :No such nickname");
 	return ;
 }

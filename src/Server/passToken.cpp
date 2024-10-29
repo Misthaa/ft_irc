@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:30:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/22 18:04:47 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:01:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void Server::passToken(std::string content, int i)
 {
     if (_client[i].getCorrectPassword() == true)
     {
-        sendError(_client[i], "462", "* PASS :You may not reregister");
+        sendError(_client[i], "462", "IRCserv: PASS :You may not reregister");
         return ;
     }
     if (content == _password)
@@ -32,7 +32,7 @@ void Server::passToken(std::string content, int i)
     }
 	else
 	{
-		sendError(_client[i], "464", "* PASS :Password incorrect");
+		sendError(_client[i], "464", "IRCserv: PASS :Password incorrect");
 		return ;
 	}
     return ;

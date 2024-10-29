@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 20:27:28 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:05:56 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void Server::inviteToken(std::string content, int i)
                     return ;
                 }
             }
-            sendError(_client[i], "403", "* INVITE :No such channel");
+            sendError(_client[i], "403", "IRCserv: INVITE :No such channel");
             return ;
         }
     }
-    sendError(_client[i], "403", "* INVITE :No such nickname");
+    sendError(_client[i], "403", "IRCserv: INVITE :No such nickname");
     return ;
 }

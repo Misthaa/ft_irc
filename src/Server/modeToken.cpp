@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:22:02 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 20:01:23 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:00:25 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,6 @@ void Server::modeToken(std::string content, int i)
 			return ;
 		}
 	}
-	sendError(_client[i], "403", "* MODE :No such channel");
+	sendError(_client[i], "403", "IRCserv: MODE :No such channel");
 	return ;
 }

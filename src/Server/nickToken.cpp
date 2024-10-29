@@ -6,7 +6,7 @@
 /*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 14:56:22 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:10:45 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ void Server::nickToken(std::string content, int i)
     content = content.substr(0, content.find(" "));
     if (nbWord < 1)
     {
-        sendError(_client[i], "461", "* NICK :Not enough parameters");
+        sendError(_client[i], "461", "IRCserv:  NICK :Not enough parameters");
         return;
     }
     if (_fds[i].fd == -1)
     {
-        sendError(_client[i], "451", "* NICK :You have not registered");
+        sendError(_client[i], "451", "IRCserv:  NICK :You have not registered");
         return;
     }
     if (content.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]-{}\\^") != 0)
     {
-        sendError(_client[i], "432", "* NICK :Erroneous username");
+        sendError(_client[i], "432", "IRCserv: NICK :Erroneous username");
         return;
     }
     for (int j = 1; j < MAX_CLIENT; j++)
     {
         if (_client[j].getNickname() == content)
         {
-            sendError(_client[i], "433", "* NICK : Nickname is already in use");
+            sendError(_client[i], "433", "IRCserv:  NICK : Nickname is already in use");
             return ;
         }
     }

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 16:46:33 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:02:55 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void Server::topicToken(std::string content, int i)
             return ;
         }
     }
-    sendError(_client[i], "403", "* TOPIC :No such channel");
+    sendError(_client[i], "403", "IRCserv: TOPIC :No such channel");
     return ;
 }
