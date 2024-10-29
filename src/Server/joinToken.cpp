@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 15:07:25 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:56:53 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void Server::joinToken(std::string content, int i)
 	content = content.substr(0, content.find(" "));
 	if (nbWord < 1)
 	{
-		sendError(_client[i], "461", "* JOIN :Not enough parameters");
+		sendError(_client[i], "461", "IRCserv: JOIN :Not enough parameters");
 		return;
 	}
 	if (_client[i].getNickname() == "" || _client[i].getUser() == "")
 	{
-		sendError(_client[i], "451", "* JOIN :You have not registered");
+		sendError(_client[i], "451", "IRCserv: JOIN :You have not registered");
 		return;
 	}
 	if (content.find_first_of("#") != 0)
 	{
-		sendError(_client[i], "461", "* JOIN :Not a channel");
+		sendError(_client[i], "403", "IRCserv: JOIN :No such channel");
 		return;
 	}
 	while (channelIndex < MAX_CHANNEL)
@@ -67,6 +67,7 @@ void Server::joinToken(std::string content, int i)
 			_channel[channelIndex].addClient(_client[i]);
 			msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost JOIN :" + content + "\n";
 			_channel[channelIndex].sendToAll(msg);
+			_channel[channelIndex].deleteInviteList(_client[i].getNickname());
 			existantChannel = 1;
 			break ; 
 		}

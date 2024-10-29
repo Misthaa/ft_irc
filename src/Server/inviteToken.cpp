@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 15:05:56 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:19:02 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void Server::inviteToken(std::string content, int i)
                         return ;
                     }
                     _channel[k].addInviteList(nickname);
-                    msg = ":" + _client[i].getNickname() + " INVITE " + nickname + " " +  + " " + channelName + "\n";
+                    msg = ":" + _client[i].getNickname() + " INVITE " + nickname + " " +  + " " + channelName;
                     servSend(_fds[j].fd, msg);
                     servSend(_fds[i].fd, msg);
                     return ;

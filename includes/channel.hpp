@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 15:03:19 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:56:20 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <string>
 # include <map>
 # include "client.hpp"
+
+# define MAX_CLIENT 100
 
 class Channel
 {
@@ -34,6 +36,7 @@ class Channel
 		std::string getChannelTopic() { return _channelTopic; };
 		bool isClientInChannel(Client &client);
 		bool isInvited(std::string nickname);
+		void deleteInviteList(std::string nickname);
 		bool isEmptyChan();
 
 
@@ -60,7 +63,7 @@ class Channel
 		std::string _channelName;
 		std::string _channelPassword;
 		std::string _channelTopic;
-		std::string	_channelInviteList[100];
+		std::string	_channelInviteList[MAX_CLIENT];
 		std::map<Client &, bool> _channelClient;
 };
 

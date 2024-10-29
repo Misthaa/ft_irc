@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/28 20:27:24 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:55:55 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,23 @@ int Channel::isOperator(Client &client)
 
 void Channel::addInviteList(std::string channelInviteList)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < MAX_CLIENT; i++)
 	{
 		if (_channelInviteList[i] == "")
 		{
 			_channelInviteList[i] = channelInviteList;
+			break;
+		}
+	}
+}
+
+void Channel::deleteInviteList(std::string nickname)
+{
+	for (int i = 0; i < MAX_CLIENT; i++)
+	{
+		if (_channelInviteList[i] == nickname)
+		{
+			_channelInviteList[i] = "";
 			break;
 		}
 	}
@@ -107,7 +119,7 @@ bool Channel::isClientInChannel(Client &client)
 
 bool Channel::isInvited(std::string nickname)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < MAX_CLIENT; i++)
 	{
 		if (_channelInviteList[i] == nickname)
 			return true;
