@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topicToken.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 15:02:55 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:47:58 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@ void Server::topicToken(std::string content, int i)
     {
         if (channelName == _channel[j].getChannelName())
         {
+            if (_channel[j].isClientInChannel(_client[i]) == false)
+            {
+                sendError(_client[i], "403", "IRCserv: TOPIC :You're not on this channel");
+                return ;
+            }
+            if (topic == "(no topic)")
+            {
+                msg = ":localhost 331 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :No topic is set\n";
+                servSend(_fds[i].fd, msg);
+                return ;
+            }
+            else
+            {
+                msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :" + _channel[j].getChannelTopic() + "\n";
+                servSend(_fds[i].fd, msg);
+            }
             if (_channel[j].isOperator(_client[i]) == 0 && _channel[j].getChangeTopic() == true)
             {
 				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * TOPIC :You must be operator to change the topic of this channel\n";
