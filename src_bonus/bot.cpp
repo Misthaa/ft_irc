@@ -101,7 +101,6 @@ void Bot::addPlayer(std::string player)
     response(_clientSocket, msg);
     srand(time(NULL));
     int price = rand() % 1000;
-    std::cout << "PRICE : " << price << std::endl;
     _playerMap[player] = price;
 }
 
@@ -173,7 +172,6 @@ void Bot::readDataBot()
                 return;
             }
             buff[ret] = '\0';
-            std::cout << buff << std::endl;
             std::string content = buff;
             std::string player = content.substr(0, content.find(" "));
             content = nextArg(content);
@@ -199,7 +197,7 @@ void Bot::readDataBot()
 
 void Bot::run()
 {
-    // std::cout << "bot is running" << std::endl;
+    std::cout << "bot is running" << std::endl;
     _clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (_clientSocket == -1)
     {

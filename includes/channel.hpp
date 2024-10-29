@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:05:21 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/23 14:58:49 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:03:19 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ class Channel
 		std::string _channelName;
 		std::string _channelPassword;
 		std::string _channelTopic;
-		std::string _channelInviteList[100];
+		std::string	_channelInviteList[100];
 		std::map<Client &, bool> _channelClient;
 };
 

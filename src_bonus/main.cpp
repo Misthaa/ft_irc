@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 19:07:32 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 22:05:24 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:05:05 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,23 @@ int main(int ac, char **av)
         std::cerr << "Usage: ./bot [nickname] [port] [password]" << std::endl;
         return 1;
     }
+    
     Bot *bot = new Bot(av[1], av[2], av[3]);
+    
     if (!bot)
     {
         std::cerr << "Error: can't create bot" << std::endl;
         return 1;
     }
+
     closeBot(bot);
+    
     if (signal(SIGINT, sigintHandler) == SIG_ERR)
 	{
 		std::cerr << "Error: can't catch SIGINT" << std::endl;
 		return (1);
 	}
+    
     try {
         bot->run();
     }
@@ -59,5 +64,6 @@ int main(int ac, char **av)
         std::cerr << e.what() << std::endl;
         return 1;
     }
+    
     return 0;
 }

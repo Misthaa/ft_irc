@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 19:04:33 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:59:35 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,6 @@ int Server::isClientExist(std::string nickname)
 
 bool Server::checkIsClient(int i)
 {
-	std::cout << "Nickname: " << _client[i].getNickname() << std::endl;
-	std::cout << "User: " << _client[i].getUser() << std::endl;
-	std::cout << "Password: " << _client[i].getCorrectPassword() << std::endl;
 	if (_client[i].getNickname() == "")
 	{
 		sendError(_client[i], "451", "* :You have not registered");
@@ -138,7 +135,6 @@ void Server::readData(std::string *BUFF, int i)
 	
 	buff = normalizeSpaces(*BUFF);
 	
-	std::cout << "3'----------------\n" << buff << "----------------5'" << std::endl;
 	if (buff.find("\n") == std::string::npos)
 		return ;
 	else
@@ -157,7 +153,6 @@ void Server::readData(std::string *BUFF, int i)
 			content = "";
 		else
 			content = line.substr(line.find(" ") + 1);
-		std::cout << "Token: " << token << " --> Content: " << content << std::endl;
 		if (token == "NICK")
 			nickToken(content, i);
 		else if (token == "USER")
@@ -203,9 +198,9 @@ void Server::sendError(Client& client, std::string errorCode,std::string errorMs
 	servSend(client.getClientSocket(), msg);
 }
 
-void Server::servSend(int fd, std::string msg) {
+void Server::servSend(int fd, std::string msg) 
+{
 	msg += "\r\n";
-	std::cout << fd << std::endl;
 	send(fd, msg.c_str(), msg.size(), MSG_NOSIGNAL | MSG_DONTWAIT);
 }
 
@@ -217,7 +212,6 @@ void Server::newClient()
 	{
 		if (_fds[i].fd == -1)
 		{
-			std::cout << "Client " << i << " is here! socket : " << client << std::endl;
 			_fds[i].fd = client;
 			_fds[i].events = POLLIN;
 			_client[i].setClientSocket(client);
@@ -267,7 +261,6 @@ int Server::acceptClient()
 		if (_fds[i].revents & POLLIN)
 		{
 			int msg = recv(_fds[i].fd, BUFF, SIZE_MSG - 1, 0);
-			std::cout << "msg : " << msg << std::endl;
 			if (msg <= 0)
 			{
 				closeClient(i);

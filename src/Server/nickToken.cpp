@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nickToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 22:02:37 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 18:33:03 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:56:22 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void Server::nickToken(std::string content, int i)
     {
         if (_client[i].getUser() != "" && _client[i].getCorrectPassword() == true)
         {
-            std::cout << "je passe par ;a " << std::endl;
             msg = ":localhost:" + _sPort + " 001 " + content + " :Welcome to IRC " + content + "!";
             servSend(_fds[i].fd, msg);
         }

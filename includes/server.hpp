@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:14 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/23 19:00:13 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:03:55 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ class Server
 
 };
 
+/*      UTILS :     */
 
-//utils :   
 std::string	ft_clearString(const std::string &str);
 int ft_stoi(const std::string &str);
 int countWord(const std::string &str);
