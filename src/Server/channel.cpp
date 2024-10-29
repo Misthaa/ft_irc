@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 15:55:55 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:37:58 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,33 @@ void Channel::addClient(Client &client)
 	std::cout << "Client " << client.getNickname() << " joined channel " << _channelName << std::endl;
 }
 
-void Channel::removeClient(Client &client)
+std::string Channel::listChannelClient() {
+	std::string list;
+
+	for (std::map<Client&, bool>::iterator it = _channelClient.begin(); it != _channelClient.end(); it++)
+	{
+		if (it->second == true)
+			list += "@";
+		list += it->first.getNickname() + " ";
+	}
+	list += "\n";
+	return list;
+}
+
+void Channel::removeClient(Client &client, std::string reason)
 {
+	std::string msg;
 	std::map<Client&, bool>::iterator it = _channelClient.begin();
 	while (it != _channelClient.end())
 	{
 		if (it->first.getNickname() == client.getNickname())
 		{
+			if (reason == "disconnected")
+				msg = ":" + client.getNickname() + "!" + client.getUser() + "@localhost PART " + _channelName + " :disconnected\n";
+			if (reason == "quit")
+				msg = ":" + client.getNickname() + "!" + client.getUser() + "@localhost QUIT :quit\n";
+			if (msg != "")
+				sendToAll(msg);
 			_channelClient.erase(it);
 			return ;
 		}

@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 16:19:02 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:27:25 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void Server::inviteToken(std::string content, int i)
                     if (_channel[k].isClientInChannel(_client[i]) == false)
                     {
                         msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel\n";
+                        servSend(_fds[i].fd, msg);
+                        return ;
+                    }
+                    if (_channel[k].getChannelOnInvite() == true && _channel[k].isOperator(_client[i]) == 0)
+                    {
+                        msg = ":localhost 482 " + _client[i].getNickname() + " " + channelName + " * INVITE :You must be operator to invite someone on this channel\n";
                         servSend(_fds[i].fd, msg);
                         return ;
                     }

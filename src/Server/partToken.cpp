@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:21:54 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 15:01:21 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:07:46 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void Server::partToken(std::string content, int i)
             }
             std::string msg = ":" + _client[i].getNickname() + "!" + _client[i].getUser() + "@localhost PART " + channelName + " :leaving\n";
             _channel[j].sendToAll(msg);
-            _channel[j].removeClient(_client[i]);
+            _channel[j].removeClient(_client[i], "part");
             if (_channel[j].isEmptyChan() == true)
                 _channel[j].clear();
             return ;

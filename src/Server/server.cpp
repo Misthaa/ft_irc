@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 14:59:35 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:33:37 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void Server::readData(std::string *BUFF, int i)
 		else if (token == "USER")
 			userToken(content, i);
 		else if (token == "QUIT")
-			quitToken(i);
+			quitToken(content, i);
 		else if (token == "PASS")
 			passToken(content, i);
 		else if (token == "CAP" || token == "PING" || token == "PONG" || token == "WHO")
@@ -224,6 +224,8 @@ void Server::closeClient(int i)
 	int clientSocket = _client[i].getClientSocket();
 	if (clientSocket != -1)
 		close(clientSocket);
+	for (int j = 0; j < MAX_CHANNEL; j++)
+		_channel[j].removeClient(_client[i], "disconnected");
 	_client[i].setNickname("");
 	_client[i].setUser("");
 	_buff[i] = "";
@@ -231,8 +233,6 @@ void Server::closeClient(int i)
 	_fds[i].fd = -1;
 	_client[i].setCorrectPassword(false);
 	_client[i].setClientSocket(-1);
-	for (int j = 0; j < MAX_CHANNEL; j++)
-		_channel[j].removeClient(_client[i]);
 }
 
 void Server::closeAll()

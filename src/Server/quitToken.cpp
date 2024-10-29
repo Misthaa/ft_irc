@@ -6,14 +6,20 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:02:56 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/28 19:02:19 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:34:57 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.hpp"
 
-void Server::quitToken(int i)
+void Server::quitToken(std::string content, int i)
 {
+    (void)content;
+    for (int j = 0; j < MAX_CHANNEL; j++)
+    {
+        if (_channel[j].isClientInChannel(_client[i]) == true)
+            _channel[j].removeClient(_client[i], "quit");
+    }
     _client[i].closeClient();
     _fds[i].fd = -1;
     _fds[i].events = 0;
