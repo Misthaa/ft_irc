@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 18:07:16 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:53:32 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:34:51 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void Server::newClient()
 			return;
 		}
 	}
+	servSend(client, ":localhost:421 * :Server is full");
 }
 void Server::closeClient(int i)
 {

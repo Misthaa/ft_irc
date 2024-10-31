@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 13:22:03 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 21:39:18 by madegryc         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:38:21 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,17 @@ int Channel::isOperator(Client &client)
 
 void Channel::addInviteList(std::string channelInviteList)
 {
+	static int i = 0;
 	for (int i = 0; i < MAX_CLIENT; i++)
 	{
 		if (_channelInviteList[i] == "")
 		{
 			_channelInviteList[i] = channelInviteList;
-			break;
+			return;
 		}
 	}
+	_channelInviteList[i % MAX_CLIENT] = channelInviteList;
+	i++;
 }
 
 void Channel::deleteInviteList(std::string nickname)
