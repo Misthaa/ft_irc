@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inviteToken.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:26:27 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 20:27:25 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:14:39 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ void Server::inviteToken(std::string content, int i)
                 {
                     if (_channel[k].isClientInChannel(_client[i]) == false)
                     {
-                        msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel\n";
+                        msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel";
                         servSend(_fds[i].fd, msg);
                         return ;
                     }
                     if (_channel[k].getChannelOnInvite() == true && _channel[k].isOperator(_client[i]) == 0)
                     {
-                        msg = ":localhost 482 " + _client[i].getNickname() + " " + channelName + " * INVITE :You must be operator to invite someone on this channel\n";
+                        msg = ":localhost 482 " + _client[i].getNickname() + " " + channelName + " * INVITE :You must be operator to invite someone on this channel";
                         servSend(_fds[i].fd, msg);
                         return ;
                     }
                     std::map<Client&, bool>::iterator it = _channel[k].getChannelClient().find(_client[j]);
                     if (it != _channel[k].getChannelClient().end())
                     {
-                        msg = ":localhost 443 " + nickname + " " + channelName + " :is already on channel\n";
+                        msg = ":localhost 443 " + nickname + " " + channelName + " :is already on channel";
                         servSend(_fds[i].fd, msg);
                         return ;
                     }

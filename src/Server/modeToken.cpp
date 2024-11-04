@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modeToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 16:22:02 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 15:00:25 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:15:08 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,13 +205,13 @@ void Server::modeToken(std::string content, int i)
 		{
 			if (_channel[j].isClientInChannel(_client[i]) == 0)
 			{
-				msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel\n";
+				msg = ":localhost 442 " + _client[i].getNickname() + " " + channelName + " :You're not on this channel";
 				servSend(_fds[i].fd, msg);
 				return ;
 			}
 			if (_channel[j].isOperator(_client[i]) == 0)
 			{
-				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * MODE :You're not operator of this channel to change the mode\n";
+				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * MODE :You're not operator of this channel to change the mode";
 				servSend(_fds[i].fd, msg);
 				return ;
 			}

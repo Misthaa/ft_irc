@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kickToken.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:51:03 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:58:29 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:14:50 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void Server::kickToken(std::string content, int i)
 					}
 					if (_channel[k].isOperator(_client[i]) == 0)
 					{
-						msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[k].getChannelName() + " * KICK :You must be operator to kick someone in the channel\n";
+						msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[k].getChannelName() + " * KICK :You must be operator to kick someone in the channel";
 						servSend(_fds[i].fd, msg);
 						return ;
 					}

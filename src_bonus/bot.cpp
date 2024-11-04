@@ -91,7 +91,7 @@ bool Bot::isNewPlayer(std::string player)
 void Bot::addPlayer(std::string player)
 {
     std::string clothing[10] = {"T-shirt 👕", "Pants 👖", "Shoes 👞", "Hat 🧢", "Gloves 🧤", "Socks 🧦", "Underwear 🩲", "Jacket 🧥", "Scarf 🧣", "Jewels 💍"};
-    std::string brend[10] = {"Arte", "Nike", "Puma", "Reebok", "Vans", "Supraw", "New Balance", "Carhartt", "Champion", "Asics"};
+    std::string brend[10] = {"Arte", "Nike", "42", "Dickies", "Balenciaga", "Supreme", "New Balance", "Carhartt", "Champion", "Asics"};
 
     srand(time(NULL) + 200);
     int r_cloting = rand() % 10;

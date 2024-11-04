@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topicToken.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madegryc <madegryc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:54:28 by madegryc          #+#    #+#             */
-/*   Updated: 2024/10/29 21:58:39 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:15:41 by madegryc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ void Server::topicToken(std::string content, int i)
             }
             if (topic == "" && _channel[j].getChannelTopic() == "(no topic)")
             {
-                msg = ":localhost 331 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :No topic is set\n";
+                msg = ":localhost 331 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " :No topic is set";
                 servSend(_fds[i].fd, msg);
                 return ;
             }
             else if (topic == "")
             {
-                msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " " + _channel[j].getChannelTopic() + "\n";
+                msg = ":localhost 332 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " " + _channel[j].getChannelTopic();
                 servSend(_fds[i].fd, msg);
                 return ;
             }
             if (_channel[j].isOperator(_client[i]) == 0 && _channel[j].getChangeTopic() == true)
             {
-				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * TOPIC :You must be operator to change the topic of this channel\n";
+				msg = ":localhost 482 " + _client[i].getNickname() + " " + _channel[j].getChannelName() + " * TOPIC :You must be operator to change the topic of this channel";
                 servSend(_fds[i].fd, msg);
                 return ;
             }
