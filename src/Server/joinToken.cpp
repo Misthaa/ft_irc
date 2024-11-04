@@ -6,7 +6,7 @@
 /*   By: roguigna <roguigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:00:02 by roguigna          #+#    #+#             */
-/*   Updated: 2024/10/29 21:58:24 by roguigna         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:31:21 by roguigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ void Server::joinToken(std::string content, int i)
 				break;
 			}
 			channelIndex++;
+		}
+		if (channelIndex == MAX_CHANNEL)
+		{
+			msg = content + " JOIN :Too many channels\n";
+			sendError(_client[i], "405", msg);
+			return;
 		}
 	}
 	msg = ":localhost 353 " + _client[i].getNickname() + " = " + content + " :";
