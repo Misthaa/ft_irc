@@ -90,12 +90,12 @@ Pour les bonus demandé de IRC, il fallait :
 - **Fonctionnement d'envoi de fichier**
 - **Bot fonctionnel**
 
-Pour faire fonctionner le bot sous HexChat :
+Pour faire fonctionner le bot :
 
 ```
 make bonus
-./bot bot localhost motdepasse
-/PRIVMSG bot PLAY
+./bot <name> <port> <password>
+PRIVMSG bot PLAY
 ```
 
 ## 🤝 Autheurs
