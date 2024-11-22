@@ -6,12 +6,14 @@
 Ce projet a été développé dans le cadre de l'école **42**, avec pour but d'acquérir une compréhension approfondie des protocoles réseaux et des sockets en C++.
 
 ## 🚀 Fonctionnalités
-- 📡 **Connexion simultanée** de plusieurs clients.
-- 💬 **Gestion des canaux** (création, suppression, rejoindre/partir).
-- 🔒 **Authentification utilisateur** (mots de passe).
-- 🔧 **Commandes IRC standard** : `/nick`, `/join`, `/part`, `/topic`, `/kick`, `/mode`, etc.
-- 🌐 **Communication privée** entre utilisateurs via `/PRIVMSG`.
-- 🔔 **Notifications d'événements** (entrée/sortie d'un canal, changement de pseudo).
+- **Connexion simultanée** de plusieurs clients.
+- **Gestion des canaux** (création, suppression, rejoindre/partir).
+- **Authentification utilisateur** (mots de passe).
+- **Commandes IRC standard** : `/nick`, `/join`, `/part`, `/topic`, `/kick`, `/mode`, etc.
+- **Communication privée** entre utilisateurs via `/PRIVMSG`.
+- **Notifications d'événements** (entrée/sortie d'un canal, changement de pseudo).
+
+- **Bonus** : Bot pour jouer au juste prix (Sur des vetements new waves)
 
 ## 🛠️ Technologies utilisées
 - **Langage** : C++
@@ -80,6 +82,21 @@ Voici les commandes implémentées :
 | `MODE o`     | Ajouter/Enlever un modérateur        |
 | `MODE k`     | Mettre/Enlever un password de chan   |
 | `MODE t`     | Changer restrcition changement topic |
+
+## Bonus
+
+Pour les bonus demandé de IRC, il fallait :
+
+- **Fonctionnement d'envoi de fichier**
+- **Bot fonctionnel**
+
+Pour faire fonctionner le bot sous HexChat :
+
+```
+make bonus
+./bot bot localhost motdepasse
+/PRIVMSG bot PLAY
+```
 
 ## 🤝 Autheurs
 - **Mathis, madegryc**
