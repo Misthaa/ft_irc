@@ -98,6 +98,6 @@ make bonus
 PRIVMSG bot PLAY
 ```
 
-## 🤝 Autheurs
+## 🤝 Auteurs
 - **Mathis, madegryc**
 - **Romain, roguigna**
